@@ -3,7 +3,7 @@ function [prdData, info] = predict_Crassostrea_virginica_NE(par, data, auxData)
 % unpack par, data, auxData
 cPar = parscomp_st(par); vars_pull(par); vars_pull(cPar); vars_pull(data); vars_pull(auxData);
 
-filterChecks = ... % f contrained to not be larger than 1 or negeative
+filterChecks = ... % f contrained to not be larger than 1 or negative
                  f_Kiff2022 > 1 || f_Kiff2022 < 0 || ... ;
                  f_GrizWard2017 > 1 || f_GrizWard2017 < 0 || ... ;
                  f_KraeFord2007 > 1 || f_KraeFord2007 < 0 || ... ;
@@ -120,8 +120,17 @@ L_bj = (L_b * exp(t_bj * rT_j / 3)) / del_Mb;                     % cm, physical
 t_ji = tL(tL(:,1) >= tT_j,1);                                     % d,  select times after metamorphosis
 L_ji = (L_i - (L_i - L_j) * exp(-rT_B * (t_ji - tT_j))) / del_Mj; % cm, physical length at isomorphic growth
 EL_GrizWard2017 = [L_bj; L_ji]; % cm,  expected physical length at time
+% comment starrlight ELw = L/ del_M. Above you have computed the
+% structural length
 % Weight data adapted from ...
 
+% Comment Starrlight: above for the same experiment you compute structural
+% length as function of time, and convert to physical length. You should
+% use the same formula for sturtural length but you need the time points
+% that are associated with the dry weights (if they are different from time
+% points tL_GrizWard2017. So below you should replace with the same
+% calculation as above. also you are using the same "f as above" so good to
+% change f_GrizWard2017 to f. 
 L = L_i - (L_i - L_j) * exp( - rT_B * (tWd_GrizWard2017(:,1) - tT_j)); % cm, total length
 EWd_GrizWard2017 = (L.^3 * (1 + f_GrizWard2017 * ome)) * d_V; % g, wet weight 
 
