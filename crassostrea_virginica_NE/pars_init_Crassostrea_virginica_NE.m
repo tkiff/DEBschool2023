@@ -40,14 +40,20 @@ par.f                = 1;       free.f              = 0; units.f              = 
 par.f_Kiff2022       = 0.9;     free.f_Kiff2022     = 1; units.f_Kiff2022     = '-'; label.f_Kiff2022 = 'scaled functional response for f_Kiff2022 data'; 
 par.f_GrizWard2017   = 1;       free.f_GrizWard2017 = 1; units.f_GrizWard2017 = '-'; label.f_GrizWard2017 = 'scaled functional response for GrizWard2017 data'; 
 par.f_KraeFord2007   = 0.74469; free.f_KraeFord2007 = 1; units.f_KraeFord2007 = '-'; label.f_KraeFord2007 = 'scaled functional response for KraeFord2007 data'; 
-% par.f_PaynPoli2010 = 1;       free.f_PaynPoli2010 = 0; units.f_PaynPoli2010 = '-'; label.f_PaynPoli2010 = 'scaled functional response for PaynPoli2010 data';
+par.f_1              = 1;       free.f_1            = 1; units.f_1            = '-'; label.f_1 = 'scaled func response for flume 1 in RheaRice1996';
+par.f_2              = 0.8;     free.f_2            = 1; units.f_2            = '-'; label.f_2 = 'scaled func response for flume 2 in RheaRice1996';
+par.f_3              = 0.6;     free.f_3            = 1; units.f_3            = '-'; label.f_3 = 'scaled func response for flume 3 in RheaRice1996';
+par.f_4              = 0.4;     free.f_4            = 1; units.f_4            = '-'; label.f_4 = 'scaled func response for flume 4 in RheaRice1996';
+
 par.f_tL1_Davi1999   = 0.5;     free.f_tL1_Davi1999 = 1; units.f_tL1_Davi1999 = '-'; label.f_tL1_Davi1999   = 'scaled functional response for Davis upper DRE';
 par.f_tL2_Davi1999   = 0.6;     free.f_tL2_Davi1999 = 1; units.f_tL2_Davi1999 = '-'; label.f_tL2_Davi1999   = 'scaled functional response for Davis DMC';
 par.f_LeviDoal2013   = 1;       free.f_LeviDoal2013 = 1; units.f_LeviDoal2013 = '-'; label.f_LeviDoal2013   = 'scaled functional response for LeviDoal2013';
 
 % Inital size for davis data
-par.Lw_0_davi1999     = 0.595; free.Lw_0_davi1999     = 0; units.Lw_0_davi1999     = 'cm'; label.Lw_0_davi1999  = 'initial shell height for davi1999 tL data'; 
-par.Wd_0_LeviDoal2013 = 0.29;  free.Wd_0_LeviDoal2013 = 0; units.Wd_0_LeviDoal2013 = 'g';  label.Wd_0_LeviDoal2013 = 'initial dry tissue weight for LeviDoal2013 tWd data';
+par.Lw0_f             = 42.9/10; free.Lw0_f             = 0; units.Lw0_f             = 'cm'; label.Lw0_f             = 'initial shell height for RheaRice1996 tL data';
+par.Lw_0_davi1999     = 0.595;   free.Lw_0_davi1999     = 0; units.Lw_0_davi1999     = 'cm'; label.Lw_0_davi1999     = 'initial shell height for davi1999 tL data'; 
+par.Wd_0_LeviDoal2013 = 0.29;    free.Wd_0_LeviDoal2013 = 0; units.Wd_0_LeviDoal2013 = 'g';  label.Wd_0_LeviDoal2013 = 'initial dry tissue weight for LeviDoal2013 tWd data';
+
 
 %% set chemical parameters from Kooy2010 
 [par, units, label, free] = addchem(par, units, label, free, metaData.phylum, metaData.class); 

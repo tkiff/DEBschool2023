@@ -114,7 +114,7 @@ bibkey.tL_GrizWard2017 = 'GrizWard2017';
 data.tWd_GrizWard2017 = [0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.3	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	0.6	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.1	1.7	1.7	1.7	1.7	1.7	1.7	1.7	1.7	0.6	0.6	0.6	0.6	0.6	1.7	1.7	1.7	1.7	1.7	1.7	1.7	1.7	1.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.3	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	1.6	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.1	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	2.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7	3.7;
                          0.038	0.039	0.033	0.031	0.049	0.017	0.039	0.036	0.025	0.047	0.017	0.016	0.033	0.019	0.026	0.034	0.011	0.011	0.020	0.031	0.030	0.025	0.026	0.036	0.014	0.031	0.047	0.016	0.016	0.028	0.011	0.034	0.033	0.022	0.028	0.009	0.019	0.030	0.019	0.023	0.049	0.023	0.050	0.050	0.080	0.010	0.010	0.040	0.060	0.030	0.070	0.010	0.020	0.030	0.040	0.030	0.080	0.030	0.040	0.130	0.180	0.050	0.050	0.200	0.040	0.050	0.060	0.070	0.030	0.100	0.080	0.070	0.120	0.120	0.070	0.060	0.080	0.120	0.110	0.080	0.140	0.130	0.130	0.480	0.410	0.410	0.380	0.260	0.160	0.250	0.160	0.080	0.060	0.070	0.050	0.020	0.260	0.140	0.170	0.130	0.120	0.120	0.180	0.120	0.110	1.050	1.050	0.570	1.310	0.820	1.920	0.610	0.300	0.420	0.560	0.670	0.660	0.500	0.680	0.460	0.400	0.530	0.770	0.800	0.550	0.560	0.620	1.290	0.880	1.000	1.820	1.790	1.740	0.328	0.138	0.287	0.153	0.110	0.112	0.155	0.259	0.221	0.121	0.131	0.098	0.239	0.235	0.205	0.110	0.186	0.361	0.190	0.174	0.140	0.231	0.096	0.103	0.219	0.239	0.163	0.105	0.071	0.034	0.030	0.169	0.087	0.180	0.036	0.184	0.178	0.217	0.249	0.092	0.237	0.203	0.240	0.200	0.370	0.190	0.230	0.310	0.330	0.220	0.270	0.320	0.190	0.140	0.110	0.210	0.200	0.270	0.290	0.250	0.190	0.200	0.220	0.390	0.130	0.130	0.280	0.300	0.220	0.180	0.300	0.290	0.130	0.140	0.220	0.350	0.200	0.230	0.340	0.340	0.300	0.440	0.210	0.260	0.190	0.300	0.210	0.170	0.300	0.290	0.320	0.380	0.710	0.420	0.690	0.790	0.260	0.420	0.490	1.170	0.960	0.780	0.610	1.530	1.420	0.840	1.150	1.600	1.780	1.370	1.190	1.270	1.420	0.460	0.940	0.740	0.940	1.340	0.460	1.530	1.100	1.780	1.300	2.550	1.820	1.560	1.170	2.430]';
 data.tWd_GrizWard2017(:,1) = data.tWd_GrizWard2017(:,1) * 365; % d, convert yr to d
-units.tWd_GrizWard2017 = {'d', 'g'}; label.tWd_GrizWard2017 = {'time since birth', 'wet weight', 'male'};  
+units.tWd_GrizWard2017 = {'d', 'g'}; label.tWd_GrizWard2017 = {'time since birth', 'dry weight', 'male'};  
 temp.tWd_GrizWard2017 = C2K(11);  units.temp.tWd_GrizWard2017 = 'K'; label.temp.tWd_GrizWard2017 = 'temperature';
 bibkey.tWd_GrizWard2017 = 'GrizWard2017'; 
 
@@ -127,6 +127,37 @@ data.LWd(:,1) = data.LWd(:,1) / 10; % cm, convert mm to cm
 units.LWd = {'cm', 'g'}; label.LWd = {'shell height', 'dry weight', '17 C'};
 temp.LWd = C2K(17); units.temp.LWd = 'K'; label.temp.LWd = 'temperature';
 bibkey.LWd = 'Kiff2022';
+
+%%% Data from Rice et al. 1996
+% flume experiment passing water over groups of oysters 
+% temperature is the same for all animals
+temp.tL_f1 = C2K(19); units.temp.tL_f = 'K'; label.temp.tL_f = 'temperature';
+% f1 - Highest food (closest to raw sea water in flume)
+data.tL_f1 = [0 15 27 39;            % d,  time since start of exp
+              42.9 49.4 52.7 53.9]'; % mm, physical length
+data.tL_f1(:,2) = data.tL_f1(:,2) / 10; % cm, convert mm to cm
+units.tL_f1 = {'d','cm'}; label.tL_f1 = {'time since start of experiment','shell length'};
+bibkey.tL_f1 = 'RheaRice1996';
+% f2 - Lower food than f1
+data.tL_f2 = [0 15 27 39;            % d,  time since start of exp
+              42.9 48.9 51.8 52.4]'; % mm, physical length
+data.tL_f2(:,2) = data.tL_f2(:,2) / 10; % cm, convert mm to cm
+units.tL_f2 = {'d','cm'}; label.tL_f2 = {'time since start of experiment','shell length'};
+bibkey.tL_f2 = 'RheaRice1996';
+% f3 - Lower food than f2
+data.tL_f3 = [0 15 27 39;            % d,  time since start of exp
+              42.9 48.1 51.2 51.7]'; % mm, physical length
+data.tL_f3(:,2) = data.tL_f2(:,2) / 10; % cm, convert mm to cm
+units.tL_f3 = {'d','cm'}; label.tL_f3 = {'time since start of experiment','shell length'};
+bibkey.tL_f3 = 'RheaRice1996';
+% Lower food than f3
+data.tL_f4 = [0 15 27 39;            % d,  time since start of exp
+              42.9 46.9 48.0 48.2]'; % mm, physical length
+data.tL_f4(:,2) = data.tL_f2(:,2) / 10; % cm, convert mm to cm
+units.tL_f4 = {'d','cm'}; label.tL_f4 = {'time since start of experiment','shell length'};
+bibkey.tL_f4 = 'RheaRice1996';
+
+
 
 %%% Data from Davis 1999 - growth in the upper damariscotta estuary
 % Dodge cove (upper river) f = 0.9, Typically higher chl + POM than lower estuary

@@ -3,7 +3,7 @@ function [prdData, info] = predict_Crassostrea_virginica_NE(par, data, auxData)
 % unpack par, data, auxData
 cPar = parscomp_st(par); vars_pull(par); vars_pull(cPar); vars_pull(data); vars_pull(auxData);
 
-filterChecks = ... % f contrained to not be larger than 1 or negative
+filterChecks = ... % f contrained to not be larger than 1 or negeative
                  f_Kiff2022 > 1 || f_Kiff2022 < 0 || ... ;
                  f_GrizWard2017 > 1 || f_GrizWard2017 < 0 || ... ;
                  f_KraeFord2007 > 1 || f_KraeFord2007 < 0 || ... ;
@@ -30,12 +30,13 @@ TC_R97          = tempcorr(temp.R97, T_ref, T_A);
 % TC_Ri          = tempcorr(temp.Ri, T_ref, T_A);
 TC_KraeFord2007 = tempcorr(temp.tL_KraeFord2007, T_ref, T_A);
 TC_GrizWard2017 = tempcorr(temp.tL_GrizWard2017, T_ref, T_A);
-TC_tL1_Davi1999 = tempcorr(temp.tL1_Davi1999, T_ref, T_A); 
-TC_tL2_Davi1999 = tempcorr(temp.tL2_Davi1999, T_ref, T_A);
-TC_LF = tempcorr(temp.LF, T_ref, T_A);
-% TC_10           = tempcorr(temp.WdJO_10, T_ref, pars_T);
-% TC_20           = tempcorr(temp.WdJO_20, T_ref, pars_T);
-% TC_30           = tempcorr(temp.WdJO_30, T_ref, pars_T);
+%TC_tL1_Davi1999 = tempcorr(temp.tL1_Davi1999, T_ref, T_A); 
+%TC_tL2_Davi1999 = tempcorr(temp.tL2_Davi1999, T_ref, T_A);
+TC_LF           = tempcorr(temp.LF, T_ref, T_A);
+TC_tL_f         = tempcorr(temp.tL_f1, T_ref, T_A);
+% TC_10          = tempcorr(temp.WdJO_10, T_ref, pars_T);
+% TC_20          = tempcorr(temp.WdJO_20, T_ref, pars_T);
+% TC_30          = tempcorr(temp.WdJO_30, T_ref, pars_T);
 
 %% Zero-variate data
 % Life cycle
@@ -97,46 +98,61 @@ prdData.R97 = R97;
 %prdData.Ri  = RT_i;
 
 %% Uni-variate data
+
 % tL data from tL_KraeFord2007
-f = f_KraeFord2007; TC = TC_KraeFord2007; tL = tL_KraeFord2007;
-[t_j, ~, t_b, l_j, ~, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f);
-rT_j = TC * rho_j * k_M; rT_B = TC * rho_B * k_M;
+[t_j, ~, t_b, l_j, ~, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_KraeFord2007);
+rT_j = TC_KraeFord2007 * rho_j * k_M; 
+rT_B = TC_KraeFord2007 * rho_B * k_M;
 L_b  = l_b * L_m; L_j = l_j * L_m; L_i = l_i * L_m;
-tT_j = (t_j - t_b) / k_M / TC;                                    % d,  time since birth at metamorphosis
-t_bj = tL(tL(:,1) < tT_j,1);                                      % d,  select times before metamorphosis
+tT_j = (t_j - t_b) / k_M / TC_KraeFord2007;                       % d,  time since birth at metamorphosis
+t_bj = tL_KraeFord2007(tL_KraeFord2007(:,1) < tT_j,1);            % d,  select times before metamorphosis
 L_bj = (L_b * exp(t_bj * rT_j / 3)) / del_Mb;                     % cm, physical length at exponential growth as V1-morph
-t_ji = tL(tL(:,1) >= tT_j,1);                                     % d,  select times after metamorphosis
+t_ji = tL_KraeFord2007(tL_KraeFord2007(:,1) >= tT_j,1);           % d,  select times after metamorphosis
 L_ji = (L_i - (L_i - L_j) * exp(-rT_B * (t_ji - tT_j))) / del_Mj; % cm, physical length at isomorphic growth
 EL_KraeFord2007 = [L_bj; L_ji];                                   % cm,  expected physical length at time
 
-% tL data from GrizWard2017
-f = f_GrizWard2017; TC = TC_GrizWard2017; tL = tL_GrizWard2017;
-[t_j, ~, t_b, l_j, ~, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f);
-rT_j = TC * rho_j * k_M; rT_B = TC * rho_B * k_M;
+% tL data from tL_GrizWard2017
+[t_j, ~, t_b, l_j, ~, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_GrizWard2017);
+rT_j = TC_GrizWard2017 * rho_j * k_M; 
+rT_B = TC_GrizWard2017 * rho_B * k_M;
 L_b  = l_b * L_m; L_j = l_j * L_m; L_i = l_i * L_m;
-tT_j = (t_j - t_b) / k_M / TC;                                    % d,  time since birth at metamorphosis
-t_bj = tL(tL(:,1) < tT_j,1);                                      % d,  select times before metamorphosis
-L_bj = (L_b * exp(t_bj * rT_j / 3)) / del_Mb;                     % cm, physical length at exponential growth as V1-morph
-t_ji = tL(tL(:,1) >= tT_j,1);                                     % d,  select times after metamorphosis
-L_ji = (L_i - (L_i - L_j) * exp(-rT_B * (t_ji - tT_j))) / del_Mj; % cm, physical length at isomorphic growth
-EL_GrizWard2017 = [L_bj; L_ji]; % cm,  expected physical length at time
-% comment starrlight ELw = L/ del_M. Above you have computed the
-% structural length
-% Weight data adapted from ...
-
-% Comment Starrlight: above for the same experiment you compute structural
-% length as function of time, and convert to physical length. You should
-% use the same formula for sturtural length but you need the time points
-% that are associated with the dry weights (if they are different from time
-% points tL_GrizWard2017. So below you should replace with the same
-% calculation as above. also you are using the same "f as above" so good to
-% change f_GrizWard2017 to f. 
-L = L_i - (L_i - L_j) * exp( - rT_B * (tWd_GrizWard2017(:,1) - tT_j)); % cm, total length
-EWd_GrizWard2017 = (L.^3 * (1 + f_GrizWard2017 * ome)) * d_V; % g, wet weight 
+tT_j = (t_j - t_b) / k_M / TC_GrizWard2017;              % d,  time since birth at metamorphosis
+t_bj = tL_GrizWard2017(tL_GrizWard2017(:,1) < tT_j,1);   % d,  select times before metamorphosis
+L_bj = (L_b * exp(t_bj * rT_j / 3));                     % structural length at exponential growth as V1-morph
+t_ji = tL_GrizWard2017(tL_GrizWard2017(:,1) >= tT_j,1);  % d,  select times after metamorphosis
+L_ji = (L_i - (L_i - L_j) * exp(-rT_B * (t_ji - tT_j))); % Structural length at isomorphic growth
+ELw_GrizWard2017 = [L_bj/del_Mb; L_ji/del_Mj];           % cm,  expected physical length at time
+% Age @ dry weight tL_GrizWard2017 (for same ages)
+L = [L_bj ; L_ji];
+EWd_GrizWard2017 = (L.^3 * (1 + f_GrizWard2017 * w)) * d_V; % g, dry weight 
 
 % LWw data from Kiff2022
-f   = f_Kiff2022;
-EWd = ((LWd(:,1) * del_Mj).^3 * (1 + w * f)) * d_V; % g, expected dry weight
+EWd = ((LWd(:,1) * del_Mj).^3 * (1 + w * f_Kiff2022)) * d_V; % g, expected dry weight
+
+% tL data from RheaRice_1996
+% Growth at varying food but same same temperature
+% tL_f1
+[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_1); % inefficient
+rT_B = TC_tL_f * rho_B * k_M; 
+L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f1(:,1)))); % Structural length at isomorphic growth
+EL_w_f1 = L/del_Mj; % convert to physical length
+% tL_f2
+[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
+rT_B = TC_tL_f * rho_B * k_M; 
+L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f2(:,1)))); % Structural length at isomorphic growth
+EL_w_f2 = L/del_Mj; % convert to physical length
+% tL_f3
+[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
+rT_B = TC_tL_f * rho_B * k_M; 
+L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f3(:,1)))); % Structural length at isomorphic growth
+EL_w_f3 = L/del_Mj; % convert to physical length
+% tL_f4
+[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
+rT_B = TC_tL_f * rho_B * k_M; 
+L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f4(:,1)))); % Structural length at isomorphic growth
+EL_w_f4 = L/del_Mj; % convert to physical length
+
+% LEFT OFF
 
 % tL 1 - Upper DRE w/varying temp from AmP entry Aequipecten_opercalaris
 [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL1_Davi1999);
@@ -152,6 +168,7 @@ EL_tL2_Davi1999 = L/ del_Mj;
 
 % length - filtering rate
 EF = TC_LF * F_m * (LF(:,1)*del_Mj).^2; % l/d, filtering rate (on natural seston)
+% Is food imporatant for this estimation?
 
 % from littorina littorina
 %f = f_LeviDoal2013; 
@@ -205,10 +222,15 @@ EWd_LeviDoal2013 = L.^3 * (1 + f_LeviDoal2013 * w) * d_V; % mg, AFDW
 % EJO_30 = J_O / 1000000;                                             % mL/h,  O2-consumption
 
 % Pack to output
-prdData.tL_KraeFord2007 = EL_KraeFord2007;
-prdData.tL_GrizWard2017 = EL_GrizWard2017;
+prdData.tL_KraeFord2007  = EL_KraeFord2007;
+prdData.tL_GrizWard2017  = ELw_GrizWard2017;
 prdData.tWd_GrizWard2017 = EWd_GrizWard2017;
 prdData.LWd              = EWd;
+prdData.EL_w_f1          = tL_f1;
+prdData.EL_w_f2          = tL_f2;
+prdData.EL_w_f3          = tL_f3;
+prdData.EL_w_f4          = tL_f4;
+
 prdData.tL1_Davi1999    = EL_tL1_Davi1999;
 prdData.tL2_Davi1999    = EL_tL2_Davi1999;
 prdData.LF              = EF;
