@@ -40,12 +40,12 @@ data.aj   = 14;       units.aj      = 'd'; label.aj      = 'age at metamorphosis
   temp.aj = C2K(23.5);  units.temp.aj = 'K'; label.temp.aj = 'temperature';
   
 % modified from original estimation
-data.ap   = 545;       units.ap      = 'd'; label.ap      = 'age at puberty';       bibkey.ap = {'Coe1932'};
-  temp.ap = C2K(11);  units.temp.ap = 'K'; label.temp.ap = 'temperature';
-  comment.ap = 'Unclear on exact time, estimated from "reaches puberty in second year"';
+% data.ap   = 545;       units.ap      = 'd'; label.ap      = 'age at puberty';       bibkey.ap = {'Coe1932'};
+%   temp.ap = C2K(11);  units.temp.ap = 'K'; label.temp.ap = 'temperature';
+%   comment.ap = 'Unclear on exact time, estimated from "reaches puberty in second year"';
 % Orinigal
-% data.ap   = 84;       units.ap      = 'd'; label.ap      = 'age at puberty';       bibkey.ap = {'HayeMenz1981','ObeiHeff1996'};
-%   temp.ap = C2K(28);  units.temp.ap = 'K'; label.temp.ap = 'temperature';
+data.ap   = 84;       units.ap      = 'd'; label.ap      = 'age at puberty';       bibkey.ap = {'HayeMenz1981','ObeiHeff1996'};
+  temp.ap = C2K(28);  units.temp.ap = 'K'; label.temp.ap = 'temperature';
 
 % Retained from original estimation
 data.am   = 20 * 365; units.am      = 'd'; label.am      = 'life span';            bibkey.am = 'Gals1964';
@@ -131,7 +131,7 @@ bibkey.LWd = 'Kiff2022';
 %%% Data from Rice et al. 1996
 % flume experiment passing water over groups of oysters 
 % temperature is the same for all animals
-temp.tL_f1 = C2K(19); units.temp.tL_f = 'K'; label.temp.tL_f = 'temperature';
+temp.tL_f1 = C2K(20); units.temp.tL_f = 'K'; label.temp.tL_f = 'temperature';
 % f1 - Highest food (closest to raw sea water in flume)
 data.tL_f1 = [0 15 27 39;            % d,  time since start of exp
               42.9 49.4 52.7 53.9]'; % mm, physical length
@@ -147,33 +147,15 @@ bibkey.tL_f2 = 'RheaRice1996';
 % f3 - Lower food than f2
 data.tL_f3 = [0 15 27 39;            % d,  time since start of exp
               42.9 48.1 51.2 51.7]'; % mm, physical length
-data.tL_f3(:,2) = data.tL_f2(:,2) / 10; % cm, convert mm to cm
+data.tL_f3(:,2) = data.tL_f3(:,2) / 10; % cm, convert mm to cm
 units.tL_f3 = {'d','cm'}; label.tL_f3 = {'time since start of experiment','shell length'};
 bibkey.tL_f3 = 'RheaRice1996';
 % Lower food than f3
 data.tL_f4 = [0 15 27 39;            % d,  time since start of exp
               42.9 46.9 48.0 48.2]'; % mm, physical length
-data.tL_f4(:,2) = data.tL_f2(:,2) / 10; % cm, convert mm to cm
+data.tL_f4(:,2) = data.tL_f4(:,2) / 10; % cm, convert mm to cm
 units.tL_f4 = {'d','cm'}; label.tL_f4 = {'time since start of experiment','shell length'};
 bibkey.tL_f4 = 'RheaRice1996';
-
-
-
-%%% Data from Davis 1999 - growth in the upper damariscotta estuary
-% Dodge cove (upper river) f = 0.9, Typically higher chl + POM than lower estuary
-data.tL1_Davi1999 = [29 47 55 66 73 83 91 105 114 119 125 132 143 362 433 481 525 567 ;
-                     6.0 16.1 18.9 22.2 23.8 25.3 26.1 29.3 31.4 31.9 32.8 33.3 33.3 34.7 58.4 67.5 70.1 69.2]';  % mm, shell length at f and T
-data.tL1_Davi1999(:,2) = data.tL1_Davi1999(:,2) / 10; % cm, convert mm to cm
-units.tL1_Davi1999   = {'d', 'cm'};  label.tL1_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL1_Davi1999 = 'Davi1999';
-temp.tL1_Davi1999    = C2K(18);  units.temp.tL1_Davi1999 = 'K'; label.temp.tL1_Davi1999 = 'temperature';
-comment.tL1_Davi1999 = 'Oysters deployed mid may'; 
-% DMC (lower river) f = 0.7, Typically lower chl + POM than lower estuary
-data.tL2_Davi1999 = [29 47 53 62 72 81 88 101 110 118 124 133 142 150 363 480 526 567; 
-                     5.8 9.6 10.8 14.4 19.0 20.5 21.4 23.9 24.0 24.5 25.7 26.7 26.3 27.1 31.2 52.7 55.2 56.3]';  % mm, shell length at f and T
-data.tL2_Davi1999(:,2) = data.tL2_Davi1999(:,2) / 10; % cm, convert mm to cm
-units.tL2_Davi1999   = {'d', 'cm'};  label.tL2_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL2_Davi1999 = 'Davi1999';
-temp.tL2_Davi1999    = C2K(14);  units.temp.tL2_Davi1999 = 'K'; label.temp.tL2_Davi1999 = 'temperature';
-comment.tL2_Davi1999 = 'Oysters deployed mid may';
 
 % Data from Eastern Canada - feeding on natural seston (surface aquaculture specific)
 % shell length (cm), filtering rate (l/h)
@@ -183,15 +165,33 @@ data.LF(:,1) = data.LF(:,1)/10; % convert mm to cm
 data.LF(:,2) = data.LF(:,2)*24;
 units.LF = {'cm', 'l/d'}; label.LF = {'shell length', 'filtering rate'};  
 temp.LF = C2K(16); units.temp.LF = 'K'; label.temp.LF = 'temperature';
-bibkey.LF = 'Come2013'; 
+bibkey.LF = 'Come2013';
 
-% time since 1 jan 1935 (d), dry tissue weight (g)
-data.tWd_LeviDoal2013 = [0 27 58 84 111 140 186 254 325 342 375 400 427 457 480 519 ;
-                         0.29 0.53 0.98 1.11 1.40 1.55 1.59 1.50 1.55 1.76 1.79 1.66 2.04 2.70 2.96 3.14]';
-units.tWd_LeviDoal2013   = {'d', 'g'};  label.tWd_LeviDoal2013 = {'time since 2008/06/09', 'dry tissue weight'};  
-temp.tWd_LeviDoal2013    = C2K(14.4);  units.temp.tWd_LeviDoal2013 = 'K'; label.temp.tWd_LeviDoal2013 = 'temperature';
-bibkey.tWd_LeviDoal2013 = 'LeviDoal2013';
-comment.tWd_LeviDoal2013 = 'Data from shelter island (unpolluted control site)';
+
+
+% %%% Data from Davis 1999 - growth in the upper damariscotta estuary
+% % Dodge cove (upper river) f = 0.9, Typically higher chl + POM than lower estuary
+% data.tL1_Davi1999 = [29 47 55 66 73 83 91 105 114 119 125 132 143 362 433 481 525 567 ;
+%                      6.0 16.1 18.9 22.2 23.8 25.3 26.1 29.3 31.4 31.9 32.8 33.3 33.3 34.7 58.4 67.5 70.1 69.2]';  % mm, shell length at f and T
+% data.tL1_Davi1999(:,2) = data.tL1_Davi1999(:,2) / 10; % cm, convert mm to cm
+% units.tL1_Davi1999   = {'d', 'cm'};  label.tL1_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL1_Davi1999 = 'Davi1999';
+% temp.tL1_Davi1999    = C2K(18);  units.temp.tL1_Davi1999 = 'K'; label.temp.tL1_Davi1999 = 'temperature';
+% comment.tL1_Davi1999 = 'Oysters deployed mid may'; 
+% % DMC (lower river) f = 0.7, Typically lower chl + POM than lower estuary
+% data.tL2_Davi1999 = [29 47 53 62 72 81 88 101 110 118 124 133 142 150 363 480 526 567; 
+%                      5.8 9.6 10.8 14.4 19.0 20.5 21.4 23.9 24.0 24.5 25.7 26.7 26.3 27.1 31.2 52.7 55.2 56.3]';  % mm, shell length at f and T
+% data.tL2_Davi1999(:,2) = data.tL2_Davi1999(:,2) / 10; % cm, convert mm to cm
+% units.tL2_Davi1999   = {'d', 'cm'};  label.tL2_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL2_Davi1999 = 'Davi1999';
+% temp.tL2_Davi1999    = C2K(14);  units.temp.tL2_Davi1999 = 'K'; label.temp.tL2_Davi1999 = 'temperature';
+% comment.tL2_Davi1999 = 'Oysters deployed mid may'; 
+
+% % time since 1 jan 1935 (d), dry tissue weight (g)
+% data.tWd_LeviDoal2013 = [0 27 58 84 111 140 186 254 325 342 375 400 427 457 480 519 ;
+%                          0.29 0.53 0.98 1.11 1.40 1.55 1.59 1.50 1.55 1.76 1.79 1.66 2.04 2.70 2.96 3.14]';
+% units.tWd_LeviDoal2013   = {'d', 'g'};  label.tWd_LeviDoal2013 = {'time since 2008/06/09', 'dry tissue weight'};  
+% temp.tWd_LeviDoal2013    = C2K(14.4);  units.temp.tWd_LeviDoal2013 = 'K'; label.temp.tWd_LeviDoal2013 = 'temperature';
+% bibkey.tWd_LeviDoal2013 = 'LeviDoal2013';
+% comment.tWd_LeviDoal2013 = 'Data from shelter island (unpolluted control site)';
 
 %  %%% Data from Shumway and Koen - Resp at different temperatures
 %  % dry weight (g) oxygen consumption (mLO2/h) at T = 10C and f = 1
@@ -216,6 +216,18 @@ comment.tWd_LeviDoal2013 = 'Data from shelter island (unpolluted control site)';
 %% set weights for all real data
 weights = setweights(data, []);
 
+% weights.tL_f1 = 20 * weights.tL_f1;
+% weights.tL_f2 = 20 * weights.tL_f2;
+% weights.tL_f3 = 20 * weights.tL_f3;
+% weights.tL_f4 = 20 * weights.tL_f4;
+
+% weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
+% weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
+% weights.tWd_GrizWard2017 = 0 * weights.tWd_GrizWard2017;
+% weights.LWd = 0 * weights.LWd;
+
+
+
 %% set pseudodata and respective weights
 [data, units, label, weights] = addpseudodata(data, units, label, weights);
 % weights.psd.v = 2 * weights.psd.v;
@@ -232,11 +244,11 @@ txtData.comment = comment;
 
 %% Group plots
 set1 = {'tL_GrizWard2017','tL_KraeFord2007'}; subtitle1 = {'Growth at NH and NJ'};
-set2 = {'tL1_Davi1999','tL2_Davi1999'}; subtitle2 = {'Growth in upper and lower DRE'};
-% set3 = {'WdJO_30','WdJO_20','WdJO_10'}; subtitle3 = {'respiration rate at 30, 20, 10C'};
+%set2 = {'tL1_Davi1999','tL2_Davi1999'}; subtitle2 = {'Growth in upper and lower DRE'};
+set3 = {'tL_f1','tL_f2','tL_f3','tL_f4'}; subtitle3 = {'Growth at different food levels'};
 
-metaData.grp.sets    = {set1 set2};
-metaData.grp.comment = {subtitle1 subtitle2};
+metaData.grp.sets    = {set1 set3}; % set2
+metaData.grp.comment = {subtitle1 subtitle3}; % subtitle2
 
 %% Discussion points
 % D1 = 'mod_1: use of pseudo-data k, instead of k_J, to avoid that maintenance ratio k exceeds 1';

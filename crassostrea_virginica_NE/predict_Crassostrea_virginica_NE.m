@@ -6,10 +6,12 @@ cPar = parscomp_st(par); vars_pull(par); vars_pull(cPar); vars_pull(data); vars_
 filterChecks = ... % f contrained to not be larger than 1 or negeative
                  f_Kiff2022 > 1 || f_Kiff2022 < 0 || ... ;
                  f_GrizWard2017 > 1 || f_GrizWard2017 < 0 || ... ;
-                 f_KraeFord2007 > 1 || f_KraeFord2007 < 0 || ... ;
-                 f_LeviDoal2013 > 1 || f_LeviDoal2013 < 0 || ... ;
-                 f_tL1_Davi1999 > 1 || f_tL1_Davi1999 < 0 || ... ;
-                 f_tL2_Davi1999 > 1 || f_tL2_Davi1999 < 0;
+                 f_KraeFord2007 > 1 || f_KraeFord2007 < 0; % || ... ;
+                 
+             
+%                  f_LeviDoal2013 > 1 || f_LeviDoal2013 < 0 || ... ;
+%                  f_tL1_Davi1999 > 1 || f_tL1_Davi1999 < 0 || ... ;
+%                  f_tL2_Davi1999 > 1 || f_tL2_Davi1999 < 0;
              
 
 
@@ -134,51 +136,52 @@ EWd = ((LWd(:,1) * del_Mj).^3 * (1 + w * f_Kiff2022)) * d_V; % g, expected dry w
 % tL_f1
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_1); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
-L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f1(:,1)))); % Structural? length at isomorphic growth
+L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f1(:,1)))); % Structural? length at isomorphic growth
 % do I need to convert intial length (Lw0_f) to structural length?
+% Growth function is in structural length
 ELw_f1 = L/del_Mj; % convert to physical length
 % tL_f2
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
-L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f2(:,1)))); % Structural length at isomorphic growth
+L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f2(:,1)))); % Structural length at isomorphic growth
 ELw_f2 = L/del_Mj; % convert to physical length
 % tL_f3
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
-L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f3(:,1)))); % Structural length at isomorphic growth
+L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f3(:,1)))); % Structural length at isomorphic growth
 ELw_f3 = L/del_Mj; % convert to physical length
 % tL_f4
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
-L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f4(:,1)))); % Structural length at isomorphic growth
+L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f4(:,1)))); % Structural length at isomorphic growth
 ELw_f4 = L/del_Mj; % convert to physical length
-
-% LEFT OFF
-
-% tL 1 - Upper DRE w/varying temp from AmP entry Aequipecten_opercalaris
-[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL1_Davi1999);
-r_B = rho_B * k_M; L_i = l_i * L_m;
-[t L] = ode45(@get_L1, tL1_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
-EL_tL1_Davi1999 = L/ del_Mj;
-
-% tL2 - DMC w/varying temp from AmP entry Aequipecten_opercalaris
-[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL2_Davi1999);
-r_B = rho_B * k_M; L_i = l_i * L_m;
-[t L] = ode45(@get_L2, tL2_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
-EL_tL2_Davi1999 = L/ del_Mj;
 
 % length - filtering rate
 EF = TC_LF * F_m * (LF(:,1)*del_Mj).^2; % l/d, filtering rate (on natural seston)
 % Is food imporatant for this estimation?
 
-% from littorina littorina
-%f = f_LeviDoal2013; 
-L_0T = (Wd_0_LeviDoal2013/ (1 + f_LeviDoal2013 * w)/ d_V)^(1/3);
-% from Assiminea japonica
-[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_LeviDoal2013);
-r_B = rho_B * k_M; L_i = l_i * L_m;
-[t, L] = ode45(@get_L3, tWd_LeviDoal2013(:,1), L_0T, [], L_i, r_B, T_ref, pars_T);
-EWd_LeviDoal2013 = L.^3 * (1 + f_LeviDoal2013 * w) * d_V; % mg, AFDW
+% LEFT OFF
+
+% % tL 1 - Upper DRE w/varying temp from AmP entry Aequipecten_opercalaris
+% [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL1_Davi1999);
+% r_B = rho_B * k_M; L_i = l_i * L_m;
+% [t L] = ode45(@get_L1, tL1_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
+% EL_tL1_Davi1999 = L/ del_Mj;
+% 
+% % tL2 - DMC w/varying temp from AmP entry Aequipecten_opercalaris
+% [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL2_Davi1999);
+% r_B = rho_B * k_M; L_i = l_i * L_m;
+% [t L] = ode45(@get_L2, tL2_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
+% EL_tL2_Davi1999 = L/ del_Mj;
+
+% % from littorina littorina
+% %f = f_LeviDoal2013; 
+% L_0T = (Wd_0_LeviDoal2013/ (1 + f_LeviDoal2013 * w)/ d_V)^(1/3);
+% % from Assiminea japonica
+% [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_LeviDoal2013);
+% r_B = rho_B * k_M; L_i = l_i * L_m;
+% [t, L] = ode45(@get_L3, tWd_LeviDoal2013(:,1), L_0T, [], L_i, r_B, T_ref, pars_T);
+% EWd_LeviDoal2013 = L.^3 * (1 + f_LeviDoal2013 * w) * d_V; % mg, AFDW
 
 % % Respiration data from ShumKoen1982
 % p_ref  = p_Am * L_m^2; % J/d, max assimilation power at max size and T_ref
@@ -227,36 +230,36 @@ prdData.tL_KraeFord2007  = EL_KraeFord2007;
 prdData.tL_GrizWard2017  = ELw_GrizWard2017;
 prdData.tWd_GrizWard2017 = EWd_GrizWard2017;
 prdData.LWd              = EWd;
-prdData.ELw_f1           = tL_f1;
-prdData.ELw_f2           = tL_f2;
-prdData.ELw_f3           = tL_f3;
-prdData.ELw_f4           = tL_f4;
+prdData.tL_f1            = ELw_f1;
+prdData.tL_f2            = ELw_f2;
+prdData.tL_f3            = ELw_f3;
+prdData.tL_f4            = ELw_f4;
+prdData.LF               = EF;
 
-prdData.tL1_Davi1999    = EL_tL1_Davi1999;
-prdData.tL2_Davi1999    = EL_tL2_Davi1999;
-prdData.LF              = EF;
+% prdData.tL1_Davi1999    = EL_tL1_Davi1999;
+% prdData.tL2_Davi1999    = EL_tL2_Davi1999;
 % prdData.WdJO_10  = EJO_10;
 % prdData.WdJO_20  = EJO_20;
 % prdData.WdJO_30  = EJO_30;
-prdData.tWd_LeviDoal2013 = EWd_LeviDoal2013;
+% prdData.tWd_LeviDoal2013 = EWd_LeviDoal2013;
 
 end
 
 %% sin function varying temperature 
 
-function dL = get_L1(t, L, r_B, L_i, T_ref, pars_T)
-  TC = tempcorr(C2K(12.5+10*sin(2*pi*((t+148)+245)/365)), T_ref, pars_T);
-  dL = TC * r_B * (L_i -L); 
-end
-
-function dL = get_L2(t, L, r_B, L_i, T_ref, pars_T)
-  TC = tempcorr(C2K(10+8.4*sin(2*pi*((t+148)+233)/365)), T_ref, pars_T);
-  dL = TC * r_B * (L_i -L);
-end
-
-function dL = get_L3(t, L, L_i, r_B, T_ref, pars_T)
-  TC = tempcorr(C2K(14.4+12.9*sin(2*pi*((t+160)+252)/365)), T_ref, pars_T);
-  dL = TC * r_B * (L_i - L);
-end
+% function dL = get_L1(t, L, r_B, L_i, T_ref, pars_T)
+%   TC = tempcorr(C2K(12.5+10*sin(2*pi*((t+148)+245)/365)), T_ref, pars_T);
+%   dL = TC * r_B * (L_i -L); 
+% end
+% 
+% function dL = get_L2(t, L, r_B, L_i, T_ref, pars_T)
+%   TC = tempcorr(C2K(10+8.4*sin(2*pi*((t+148)+233)/365)), T_ref, pars_T);
+%   dL = TC * r_B * (L_i -L);
+% end
+% 
+% function dL = get_L3(t, L, L_i, r_B, T_ref, pars_T)
+%   TC = tempcorr(C2K(14.4+12.9*sin(2*pi*((t+160)+252)/365)), T_ref, pars_T);
+%   dL = TC * r_B * (L_i - L);
+% end
 
 

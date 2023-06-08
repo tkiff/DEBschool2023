@@ -41,9 +41,9 @@ par.f_Kiff2022       = 0.9;     free.f_Kiff2022     = 1; units.f_Kiff2022     = 
 par.f_GrizWard2017   = 1;       free.f_GrizWard2017 = 1; units.f_GrizWard2017 = '-'; label.f_GrizWard2017 = 'scaled functional response for GrizWard2017 data'; 
 par.f_KraeFord2007   = 0.74469; free.f_KraeFord2007 = 1; units.f_KraeFord2007 = '-'; label.f_KraeFord2007 = 'scaled functional response for KraeFord2007 data'; 
 par.f_1              = 1;       free.f_1            = 1; units.f_1            = '-'; label.f_1 = 'scaled func response for flume 1 in RheaRice1996';
-par.f_2              = 0.8;     free.f_2            = 1; units.f_2            = '-'; label.f_2 = 'scaled func response for flume 2 in RheaRice1996';
-par.f_3              = 0.6;     free.f_3            = 1; units.f_3            = '-'; label.f_3 = 'scaled func response for flume 3 in RheaRice1996';
-par.f_4              = 0.4;     free.f_4            = 1; units.f_4            = '-'; label.f_4 = 'scaled func response for flume 4 in RheaRice1996';
+par.f_2              = 0.9;     free.f_2            = 1; units.f_2            = '-'; label.f_2 = 'scaled func response for flume 2 in RheaRice1996';
+par.f_3              = 0.8;     free.f_3            = 1; units.f_3            = '-'; label.f_3 = 'scaled func response for flume 3 in RheaRice1996';
+par.f_4              = 0.7;     free.f_4            = 1; units.f_4            = '-'; label.f_4 = 'scaled func response for flume 4 in RheaRice1996';
 
 par.f_tL1_Davi1999   = 0.5;     free.f_tL1_Davi1999 = 1; units.f_tL1_Davi1999 = '-'; label.f_tL1_Davi1999   = 'scaled functional response for Davis upper DRE';
 par.f_tL2_Davi1999   = 0.6;     free.f_tL2_Davi1999 = 1; units.f_tL2_Davi1999 = '-'; label.f_tL2_Davi1999   = 'scaled functional response for Davis DMC';
