@@ -6,6 +6,10 @@ cPar = parscomp_st(par); vars_pull(par); vars_pull(cPar); vars_pull(data); vars_
 filterChecks = ... % f contrained to not be larger than 1 or negeative
                  f_Kiff2022 > 1 || f_Kiff2022 < 0 || ... ;
                  f_GrizWard2017 > 1 || f_GrizWard2017 < 0 || ... ;
+                 f_1 > 1 || f_1 < 0 || ... ;
+                 f_2 > 1 || f_2 < 0 || ... ;
+                 f_3 > 1 || f_3 < 0 || ... ;
+                 f_4 > 1 || f_4 < 0 || ... ;
                  f_KraeFord2007 > 1 || f_KraeFord2007 < 0; % || ... ;
                  
              
@@ -105,7 +109,9 @@ prdData.R97 = R97;
 [t_j, ~, t_b, l_j, ~, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_KraeFord2007);
 rT_j = TC_KraeFord2007 * rho_j * k_M; 
 rT_B = TC_KraeFord2007 * rho_B * k_M;
-L_b  = l_b * L_m; L_j = l_j * L_m; L_i = l_i * L_m;
+L_b  = l_b * L_m; 
+L_j = l_j * L_m; 
+L_i = l_i * L_m; % l_i = ultimate scaled length
 tT_j = (t_j - t_b) / k_M / TC_KraeFord2007;                       % d,  time since birth at metamorphosis
 t_bj = tL_KraeFord2007(tL_KraeFord2007(:,1) < tT_j,1);            % d,  select times before metamorphosis
 L_bj = (L_b * exp(t_bj * rT_j / 3)) / del_Mb;                     % cm, physical length at exponential growth as V1-morph
@@ -117,7 +123,8 @@ EL_KraeFord2007 = [L_bj; L_ji];                                   % cm,  expecte
 [t_j, ~, t_b, l_j, ~, l_b, l_i, rho_j, rho_B] = get_tj(pars_tj, f_GrizWard2017);
 rT_j = TC_GrizWard2017 * rho_j * k_M; 
 rT_B = TC_GrizWard2017 * rho_B * k_M;
-L_b  = l_b * L_m; L_j = l_j * L_m; L_i = l_i * L_m;
+L_b  = l_b * L_m; L_j = l_j * L_m; 
+L_i = l_i * L_m;
 tT_j = (t_j - t_b) / k_M / TC_GrizWard2017;              % d,  time since birth at metamorphosis
 t_bj = tL_GrizWard2017(tL_GrizWard2017(:,1) < tT_j,1);   % d,  select times before metamorphosis
 L_bj = (L_b * exp(t_bj * rT_j / 3));                     % structural length at exponential growth as V1-morph
@@ -134,25 +141,30 @@ EWd = ((LWd(:,1) * del_Mj).^3 * (1 + w * f_Kiff2022)) * d_V; % g, expected dry w
 % tL data from RheaRice_1996
 % Growth at varying food but same same temperature
 % tL_f1
-[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_1); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_1); % inefficient
+% What is l_i
 rT_B = TC_tL_f * rho_B * k_M; 
+L_i = l_i * L_m; % max length needed at a food level? what does this do?
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f1(:,1)))); % Structural? length at isomorphic growth
 % do I need to convert intial length (Lw0_f) to structural length?
 % Growth function is in structural length
 ELw_f1 = L/del_Mj; % convert to physical length
 % tL_f2
-[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
+L_i = l_i * L_m;
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f2(:,1)))); % Structural length at isomorphic growth
 ELw_f2 = L/del_Mj; % convert to physical length
 % tL_f3
-[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
+L_i = l_i * L_m;
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f3(:,1)))); % Structural length at isomorphic growth
 ELw_f3 = L/del_Mj; % convert to physical length
 % tL_f4
-[~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
+L_i = l_i * L_m;
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f4(:,1)))); % Structural length at isomorphic growth
 ELw_f4 = L/del_Mj; % convert to physical length
 
@@ -164,7 +176,8 @@ EF = TC_LF * F_m * (LF(:,1)*del_Mj).^2; % l/d, filtering rate (on natural seston
 
 % % tL 1 - Upper DRE w/varying temp from AmP entry Aequipecten_opercalaris
 % [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL1_Davi1999);
-% r_B = rho_B * k_M; L_i = l_i * L_m;
+% r_B = rho_B * k_M; 
+% L_i = l_i * L_m;
 % [t L] = ode45(@get_L1, tL1_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
 % EL_tL1_Davi1999 = L/ del_Mj;
 % 

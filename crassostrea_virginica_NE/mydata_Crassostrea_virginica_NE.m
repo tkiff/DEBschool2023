@@ -220,7 +220,7 @@ weights = setweights(data, []);
 % weights.tL_f2 = 20 * weights.tL_f2;
 % weights.tL_f3 = 20 * weights.tL_f3;
 % weights.tL_f4 = 20 * weights.tL_f4;
-
+% 
 % weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
 % weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
 % weights.tWd_GrizWard2017 = 0 * weights.tWd_GrizWard2017;
