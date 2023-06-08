@@ -167,59 +167,57 @@ units.LF = {'cm', 'l/d'}; label.LF = {'shell length', 'filtering rate'};
 temp.LF = C2K(16); units.temp.LF = 'K'; label.temp.LF = 'temperature';
 bibkey.LF = 'Come2013';
 
+%%% Data from Davis 1999 - growth in the upper damariscotta estuary
+% Dodge cove (upper river) f = 0.9, Typically higher chl + POM than lower estuary
+data.tL1_Davi1999 = [29 47 55 66 73 83 91 105 114 119 125 132 143 362 433 481 525 567 ;
+                     6.0 16.1 18.9 22.2 23.8 25.3 26.1 29.3 31.4 31.9 32.8 33.3 33.3 34.7 58.4 67.5 70.1 69.2]';  % mm, shell length at f and T
+data.tL1_Davi1999(:,2) = data.tL1_Davi1999(:,2) / 10; % cm, convert mm to cm
+units.tL1_Davi1999   = {'d', 'cm'};  label.tL1_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL1_Davi1999 = 'Davi1999';
+temp.tL1_Davi1999    = C2K(18);  units.temp.tL1_Davi1999 = 'K'; label.temp.tL1_Davi1999 = 'temperature';
+comment.tL1_Davi1999 = 'Oysters deployed mid may'; 
+% DMC (lower river) f = 0.7, Typically lower chl + POM than lower estuary
+data.tL2_Davi1999 = [29 47 53 62 72 81 88 101 110 118 124 133 142 150 363 480 526 567; 
+                     5.8 9.6 10.8 14.4 19.0 20.5 21.4 23.9 24.0 24.5 25.7 26.7 26.3 27.1 31.2 52.7 55.2 56.3]';  % mm, shell length at f and T
+data.tL2_Davi1999(:,2) = data.tL2_Davi1999(:,2) / 10; % cm, convert mm to cm
+units.tL2_Davi1999   = {'d', 'cm'};  label.tL2_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL2_Davi1999 = 'Davi1999';
+temp.tL2_Davi1999    = C2K(14);  units.temp.tL2_Davi1999 = 'K'; label.temp.tL2_Davi1999 = 'temperature';
+comment.tL2_Davi1999 = 'Oysters deployed mid may'; 
 
+% time since 1 jan 1935 (d), dry tissue weight (g)
+data.tWd_LeviDoal2013 = [0 27 58 84 111 140 186 254 325 342 375 400 427 457 480 519 ;
+                         0.29 0.53 0.98 1.11 1.40 1.55 1.59 1.50 1.55 1.76 1.79 1.66 2.04 2.70 2.96 3.14]';
+units.tWd_LeviDoal2013   = {'d', 'g'};  label.tWd_LeviDoal2013 = {'time since 2008/06/09', 'dry tissue weight'};  
+temp.tWd_LeviDoal2013    = C2K(14.4);  units.temp.tWd_LeviDoal2013 = 'K'; label.temp.tWd_LeviDoal2013 = 'temperature';
+bibkey.tWd_LeviDoal2013 = 'LeviDoal2013';
+comment.tWd_LeviDoal2013 = 'Data from shelter island (unpolluted control site)';
 
-% %%% Data from Davis 1999 - growth in the upper damariscotta estuary
-% % Dodge cove (upper river) f = 0.9, Typically higher chl + POM than lower estuary
-% data.tL1_Davi1999 = [29 47 55 66 73 83 91 105 114 119 125 132 143 362 433 481 525 567 ;
-%                      6.0 16.1 18.9 22.2 23.8 25.3 26.1 29.3 31.4 31.9 32.8 33.3 33.3 34.7 58.4 67.5 70.1 69.2]';  % mm, shell length at f and T
-% data.tL1_Davi1999(:,2) = data.tL1_Davi1999(:,2) / 10; % cm, convert mm to cm
-% units.tL1_Davi1999   = {'d', 'cm'};  label.tL1_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL1_Davi1999 = 'Davi1999';
-% temp.tL1_Davi1999    = C2K(18);  units.temp.tL1_Davi1999 = 'K'; label.temp.tL1_Davi1999 = 'temperature';
-% comment.tL1_Davi1999 = 'Oysters deployed mid may'; 
-% % DMC (lower river) f = 0.7, Typically lower chl + POM than lower estuary
-% data.tL2_Davi1999 = [29 47 53 62 72 81 88 101 110 118 124 133 142 150 363 480 526 567; 
-%                      5.8 9.6 10.8 14.4 19.0 20.5 21.4 23.9 24.0 24.5 25.7 26.7 26.3 27.1 31.2 52.7 55.2 56.3]';  % mm, shell length at f and T
-% data.tL2_Davi1999(:,2) = data.tL2_Davi1999(:,2) / 10; % cm, convert mm to cm
-% units.tL2_Davi1999   = {'d', 'cm'};  label.tL2_Davi1999 = {'time since 5/28/1994', 'shell length'};  bibkey.tL2_Davi1999 = 'Davi1999';
-% temp.tL2_Davi1999    = C2K(14);  units.temp.tL2_Davi1999 = 'K'; label.temp.tL2_Davi1999 = 'temperature';
-% comment.tL2_Davi1999 = 'Oysters deployed mid may'; 
-
-% % time since 1 jan 1935 (d), dry tissue weight (g)
-% data.tWd_LeviDoal2013 = [0 27 58 84 111 140 186 254 325 342 375 400 427 457 480 519 ;
-%                          0.29 0.53 0.98 1.11 1.40 1.55 1.59 1.50 1.55 1.76 1.79 1.66 2.04 2.70 2.96 3.14]';
-% units.tWd_LeviDoal2013   = {'d', 'g'};  label.tWd_LeviDoal2013 = {'time since 2008/06/09', 'dry tissue weight'};  
-% temp.tWd_LeviDoal2013    = C2K(14.4);  units.temp.tWd_LeviDoal2013 = 'K'; label.temp.tWd_LeviDoal2013 = 'temperature';
-% bibkey.tWd_LeviDoal2013 = 'LeviDoal2013';
-% comment.tWd_LeviDoal2013 = 'Data from shelter island (unpolluted control site)';
-
-%  %%% Data from Shumway and Koen - Resp at different temperatures
-%  % dry weight (g) oxygen consumption (mLO2/h) at T = 10C and f = 1
-% data.WdJO_10 = [0.064	0.052	0.053	0.049	0.044	0.054	0.050	0.060	0.068	0.070	0.062	0.064	0.061	0.064	0.069	0.069	0.066	0.068	0.071	0.077	0.079	0.084	0.079	0.079	0.078	0.085	0.079	0.087	0.096	0.099	0.090	0.101	0.124	0.115	0.115	0.107	0.111	0.111	0.115	0.125	0.111	0.134	0.145	0.147	0.162	0.174	0.168	0.171	0.156	0.124	0.124	0.129	0.122	0.092	0.095	0.099	0.090	0.167	0.152	0.144	0.177	0.164	0.167	0.171	0.153	0.155	0.144	0.168	0.185	0.206	0.195	0.195	0.206	0.198	0.248	0.239	0.222	0.240	0.207	0.211	0.196	0.227	0.249	0.250	0.259	0.274	0.313	0.350	0.301	0.290	0.306	0.312	0.312	0.279	0.290	0.284	0.263	0.258	0.249	0.263	0.300	0.323	0.305	0.317	0.294	0.289	0.300	0.300	0.289	0.324	0.324	0.342	0.336	0.361	0.452	0.397	0.376	0.383	0.444	0.412	0.412	0.376	0.362	0.390	0.444	0.413	0.405	0.383	0.405	0.405	0.391	0.356	0.398	0.398	0.370	0.363	0.406	0.421	0.429	0.446	0.430	0.447	0.407	0.509	0.538	0.539	0.650	0.662	0.674	0.559	0.518	0.499	0.471	0.471	0.445	0.445	0.470	0.546	0.527	0.527	0.508	0.557	0.558	0.569	0.613	0.648	0.739	0.698	0.601	0.623	0.659	0.611; % g, dry weight
-%                 0.011	0.012	0.014	0.015	0.013	0.018	0.020	0.023	0.024	0.021	0.020	0.019	0.017	0.017	0.018	0.016	0.015	0.015	0.013	0.013	0.016	0.017	0.017	0.018	0.021	0.022	0.024	0.029	0.026	0.023	0.020	0.020	0.019	0.020	0.021	0.023	0.024	0.028	0.031	0.034	0.035	0.030	0.033	0.039	0.037	0.036	0.033	0.030	0.030	0.028	0.026	0.024	0.023	0.018	0.017	0.016	0.016	0.021	0.021	0.022	0.024	0.024	0.023	0.027	0.028	0.026	0.026	0.042	0.039	0.035	0.035	0.032	0.028	0.027	0.026	0.031	0.032	0.037	0.042	0.047	0.050	0.049	0.044	0.053	0.063	0.057	0.061	0.070	0.059	0.053	0.052	0.050	0.047	0.049	0.049	0.044	0.042	0.037	0.036	0.033	0.032	0.033	0.034	0.038	0.037	0.037	0.040	0.043	0.042	0.042	0.044	0.042	0.039	0.032	0.036	0.036	0.041	0.039	0.039	0.041	0.042	0.045	0.048	0.044	0.042	0.044	0.048	0.048	0.049	0.051	0.052	0.055	0.054	0.058	0.063	0.067	0.052	0.055	0.060	0.066	0.070	0.077	0.084	0.081	0.080	0.088	0.086	0.098	0.078	0.075	0.071	0.061	0.061	0.052	0.050	0.047	0.045	0.047	0.050	0.054	0.054	0.052	0.060	0.067	0.072	0.071	0.070	0.066	0.059	0.054	0.050	0.047]'; % mlO2/h, oxygen consumption
-% units.WdJO_10 = {'g', 'ml/h'}; label.WdJO_10 = {'dry weight', 'oxygen consumption'};
-% temp.WdJO_10 = C2K(10); units.temp.WdJO_10 = 'K'; label.temp.WdJO_10 = 'temperature';
-% bibkey.WdJO_10 = 'ShumKoen1982';
-%  % at T = 20 C
-% data.WdJO_20 = [0.035	0.037	0.046	0.045	0.034	0.041	0.044	0.050	0.046	0.047	0.053	0.056	0.057	0.067	0.065	0.056	0.057	0.063	0.065	0.070	0.089	0.078	0.078	0.089	0.080	0.102	0.105	0.089	0.089	0.099	0.109	0.122	0.134	0.123	0.123	0.102	0.145	0.153	0.145	0.151	0.147	0.178	0.185	0.165	0.182	0.172	0.172	0.151	0.215	0.264	0.241	0.241	0.204	0.216	0.237	0.280	0.307	0.350	0.338	0.376	0.343	0.377	0.447	0.439	0.448	0.424	0.358	0.371	0.338	0.463	0.539	0.560	0.511	0.605	0.676; % g, dry weight
-%                 0.017	0.019	0.021	0.023	0.026	0.031	0.037	0.034	0.030	0.027	0.028	0.031	0.034	0.034	0.041	0.046	0.021	0.025	0.029	0.026	0.026	0.031	0.037	0.042	0.048	0.045	0.037	0.037	0.033	0.031	0.032	0.038	0.043	0.046	0.055	0.059	0.042	0.043	0.051	0.060	0.036	0.041	0.045	0.050	0.060	0.065	0.074	0.069	0.050	0.050	0.060	0.071	0.071	0.085	0.095	0.086	0.073	0.077	0.091	0.055	0.062	0.071	0.081	0.095	0.102	0.117	0.111	0.100	0.097	0.070	0.091	0.110	0.115	0.136	0.110]'; % mlO2/h, oxygen consumption
-% units.WdJO_20 = {'g', 'ml/h'}; label.WdJO_20 = {'dry weight', 'oxygen consumption'};
-% temp.WdJO_20 = C2K(20); units.temp.WdJO_20 = 'K'; label.temp.WdJO_20 = 'temperature';
-% bibkey.WdJO_20 = 'ShumKoen1982';
-%  % at T = 30C
-% data.WdJO_30 = [0.036	0.040	0.042	0.047	0.047	0.055	0.057	0.063	0.059	0.056	0.056	0.063	0.043	0.088	0.083	0.096	0.091	0.083	0.073	0.079	0.069	0.069	0.077	0.083	0.093	0.099	0.104	0.093	0.112	0.123	0.146	0.149	0.126	0.121	0.102	0.111	0.136	0.146	0.170	0.177	0.198	0.187	0.186	0.170	0.189	0.183	0.251	0.286	0.314	0.281	0.271	0.261	0.233	0.271	0.267	0.327	0.327	0.327	0.359	0.359	0.332	0.393	0.474	0.493	0.466	0.467	0.433	0.418	0.370	0.360	0.434	0.450	0.494	0.494	0.574	0.575; % g, dry weight
-%                 0.056	0.063	0.079	0.070	0.092	0.097	0.103	0.090	0.074	0.071	0.060	0.047	0.035	0.048	0.053	0.054	0.061	0.068	0.068	0.077	0.096	0.105	0.111	0.105	0.101	0.097	0.085	0.085	0.070	0.064	0.095	0.109	0.105	0.118	0.127	0.143	0.129	0.145	0.145	0.169	0.176	0.140	0.124	0.109	0.092	0.099	0.109	0.101	0.093	0.117	0.127	0.145	0.148	0.163	0.197	0.186	0.166	0.153	0.153	0.169	0.117	0.126	0.126	0.142	0.147	0.178	0.184	0.208	0.216	0.197	0.238	0.216	0.212	0.196	0.212	0.242]'; % mlO2/h, oxygen consumption
-% units.WdJO_30 = {'g', 'ml/h'}; label.WdJO_30 = {'dry weight', 'oxygen consumption'};
-% temp.WdJO_30 = C2K(30); units.temp.WdJO_30 = 'K'; label.temp.WdJO_30 = 'temperature';
-% bibkey.WdJO_30 = 'ShumKoen1982';
+ %%% Data from Dame1972 - Respiration of juveniles at different temperatures
+ % dry weight (g) oxygen consumption (muLO2/h) at T = 10 C and f = 1
+data.WdJO_10 = [0.013 0.016 0.017 0.024 0.025 0.025 0.027 0.034 0.034 0.034 0.045 0.049 0.050 0.050 0.071 0.073 0.074 0.090 0.091 0.101 0.103 0.114 0.128 0.151 0.156 0.195 0.198 0.200 0.203 0.225 0.576 0.788 0.825 1.398; % g, dry weight
+                13.53 10.67 7.37 11.34 9.12 17.69 11.28 12.28 19.06 17.87 16.04 24.66 13.56 15.12 25.42 27.79 8.08 21.61 15.67 34.06 12.93 18.55 21.95 25.97 46.31 21.12 36.91 31.67 72.64 73.74 199.49 253.05 159.05 327.59]'; % mulO2/h, oxygen consumption
+units.WdJO_10 = {'g', 'mul/h'}; label.WdJO_10 = {'dry weight', 'oxygen consumption', '10 C'};
+temp.WdJO_10 = C2K(10); units.temp.WdJO_10 = 'K'; label.temp.WdJO_10 = 'temperature';
+bibkey.WdJO_10 = 'Dame1972';
+ % at T = 20 C
+data.WdJO_20 = [0.016 0.021 0.022 0.022 0.023 0.024 0.067 0.068 0.073 0.077 0.078 0.078 0.087 0.088 0.093 0.107 0.108 0.11 0.115 0.126 0.133 0.137 0.146 0.152 0.155 0.157 0.165 0.297 0.338 0.635 0.76 0.804 0.943 1.078 1.099 1.765 1.350; % g, dry weight
+                20.27 37.39 28.37 31.01 46.46 21.11 70.55 49.47 40.22 50.47 43.32 53.55 41.05 68.55 34.55 53.87 50.57 78.75 71.37 93.63 53.91 82.12 75.78 160.84 79.23 101.89 95.11 162.67 135.53 414.57 523.15 277.97 330.56 359.63 528.76 691.17 900]'; % mulO2/h, oxygen consumption
+units.WdJO_20 = {'g', 'mul/h'}; label.WdJO_20 = {'dry weight', 'oxygen consumption', '20 C'};
+temp.WdJO_20 = C2K(20); units.temp.WdJO_20 = 'K'; label.temp.WdJO_20 = 'temperature';
+bibkey.WdJO_20 = 'Dame1972';
+ % at T = 30 C
+data.WdJO_30 = [0.016 0.016 0.016 0.067 0.067 0.068 0.069 0.094 0.097 0.098 0.098 0.111 0.112 0.12 0.12 0.121 0.124 0.126 0.129 0.131 0.132 0.132 0.135 0.145 0.146 0.161 0.161 0.175 0.176 0.189 0.2 0.2 0.205 0.318 0.746 0.865 1.647 0.740 1.8; % g, dry weight
+                48.28 52.24 44.84 91.61 103.12 78.63 73.75 86.02 131.46 113.95 107.4 123.35 59.17 118.61 86.94 170 156.35 124.62 101.32 187.67 178.64 162.67 142.4 136.25 90.05 177.88 110.26 153.46 163.62 132.39 192.61 135.06 203.37 131.96 313.6 486.59 452.83 800 930]'; % mulO2/h, oxygen consumption
+units.WdJO_30 = {'g', 'mul/h'}; label.WdJO_30 = {'dry weight', 'oxygen consumption', '30 C'};
+temp.WdJO_30 = C2K(30); units.temp.WdJO_30 = 'K'; label.temp.WdJO_30 = 'temperature';
+bibkey.WdJO_30 = 'Dame1972';
 
 %% set weights for all real data
 weights = setweights(data, []);
 
-% weights.tL_f1 = 20 * weights.tL_f1;
-% weights.tL_f2 = 20 * weights.tL_f2;
-% weights.tL_f3 = 20 * weights.tL_f3;
-% weights.tL_f4 = 20 * weights.tL_f4;
+weights.tL_f1 = 0 * weights.tL_f1;
+weights.tL_f2 = 0 * weights.tL_f2;
+weights.tL_f3 = 0 * weights.tL_f3;
+weights.tL_f4 = 0 * weights.tL_f4;
 % 
 % weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
 % weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
@@ -244,11 +242,13 @@ txtData.comment = comment;
 
 %% Group plots
 set1 = {'tL_GrizWard2017','tL_KraeFord2007'}; subtitle1 = {'Growth at NH and NJ'};
-%set2 = {'tL1_Davi1999','tL2_Davi1999'}; subtitle2 = {'Growth in upper and lower DRE'};
+set2 = {'tL1_Davi1999','tL2_Davi1999'}; subtitle2 = {'Growth in upper and lower DRE'};
 set3 = {'tL_f1','tL_f2','tL_f3','tL_f4'}; subtitle3 = {'Growth at different food levels'};
+set4 = {'WdJO_30','WdJO_20','WdJO_10'}; subtitle4 = {'respiration rate at 30, 20, 10 C'};
 
-metaData.grp.sets    = {set1 set3}; % set2
-metaData.grp.comment = {subtitle1 subtitle3}; % subtitle2
+
+metaData.grp.sets    = {set1 set2 set3 set4}; % set2
+metaData.grp.comment = {subtitle1 subtitle2 subtitle3, subtitle4}; % subtitle2
 
 %% Discussion points
 % D1 = 'mod_1: use of pseudo-data k, instead of k_J, to avoid that maintenance ratio k exceeds 1';

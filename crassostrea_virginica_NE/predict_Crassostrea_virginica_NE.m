@@ -10,12 +10,13 @@ filterChecks = ... % f contrained to not be larger than 1 or negeative
                  f_2 > 1 || f_2 < 0 || ... ;
                  f_3 > 1 || f_3 < 0 || ... ;
                  f_4 > 1 || f_4 < 0 || ... ;
+                 f_LeviDoal2013 > 1 || f_LeviDoal2013 < 0 || ... ;
+                 f_tL1_Davi1999 > 1 || f_tL1_Davi1999 < 0 || ... ;
+                 f_tL2_Davi1999 > 1 || f_tL2_Davi1999 < 0 || ... ;
                  f_KraeFord2007 > 1 || f_KraeFord2007 < 0; % || ... ;
                  
              
-%                  f_LeviDoal2013 > 1 || f_LeviDoal2013 < 0 || ... ;
-%                  f_tL1_Davi1999 > 1 || f_tL1_Davi1999 < 0 || ... ;
-%                  f_tL2_Davi1999 > 1 || f_tL2_Davi1999 < 0;
+
              
 
 
@@ -36,13 +37,13 @@ TC_R97          = tempcorr(temp.R97, T_ref, T_A);
 % TC_Ri          = tempcorr(temp.Ri, T_ref, T_A);
 TC_KraeFord2007 = tempcorr(temp.tL_KraeFord2007, T_ref, T_A);
 TC_GrizWard2017 = tempcorr(temp.tL_GrizWard2017, T_ref, T_A);
-%TC_tL1_Davi1999 = tempcorr(temp.tL1_Davi1999, T_ref, T_A); 
-%TC_tL2_Davi1999 = tempcorr(temp.tL2_Davi1999, T_ref, T_A);
+% TC_tL1_Davi1999 = tempcorr(temp.tL1_Davi1999, T_ref, T_A); 
+% TC_tL2_Davi1999 = tempcorr(temp.tL2_Davi1999, T_ref, T_A);
 TC_LF           = tempcorr(temp.LF, T_ref, T_A);
 TC_tL_f         = tempcorr(temp.tL_f1, T_ref, T_A);
-% TC_10          = tempcorr(temp.WdJO_10, T_ref, pars_T);
-% TC_20          = tempcorr(temp.WdJO_20, T_ref, pars_T);
-% TC_30          = tempcorr(temp.WdJO_30, T_ref, pars_T);
+TC_10           = tempcorr(temp.WdJO_10, T_ref, T_A);
+TC_20           = tempcorr(temp.WdJO_20, T_ref, T_A);
+TC_30           = tempcorr(temp.WdJO_30, T_ref, T_A);
 
 %% Zero-variate data
 % Life cycle
@@ -150,19 +151,22 @@ L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f1(:,1)))); % Structural? leng
 % Growth function is in structural length
 ELw_f1 = L/del_Mj; % convert to physical length
 % tL_f2
-[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
+%[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, (f_1*0.53)); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
 L_i = l_i * L_m;
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f2(:,1)))); % Structural length at isomorphic growth
 ELw_f2 = L/del_Mj; % convert to physical length
 % tL_f3
-[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
+%[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, (f_1*0.39)); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
 L_i = l_i * L_m;
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f3(:,1)))); % Structural length at isomorphic growth
 ELw_f3 = L/del_Mj; % convert to physical length
 % tL_f4
-[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
+%[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, (f_1*0.21)); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
 L_i = l_i * L_m;
 L = (L_i - (L_i - Lw0_f*del_Mj) * exp(-rT_B * (tL_f4(:,1)))); % Structural length at isomorphic growth
@@ -172,71 +176,70 @@ ELw_f4 = L/del_Mj; % convert to physical length
 EF = TC_LF * F_m * (LF(:,1)*del_Mj).^2; % l/d, filtering rate (on natural seston)
 % Is food imporatant for this estimation?
 
-% LEFT OFF
+% tL 1 - Upper DRE w/varying temp from AmP entry Aequipecten_opercalaris
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL1_Davi1999);
+r_B = rho_B * k_M; 
+L_i = l_i * L_m;
+[t L] = ode45(@get_L1, tL1_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
+EL_tL1_Davi1999 = L/ del_Mj;
 
-% % tL 1 - Upper DRE w/varying temp from AmP entry Aequipecten_opercalaris
-% [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL1_Davi1999);
-% r_B = rho_B * k_M; 
-% L_i = l_i * L_m;
-% [t L] = ode45(@get_L1, tL1_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
-% EL_tL1_Davi1999 = L/ del_Mj;
-% 
-% % tL2 - DMC w/varying temp from AmP entry Aequipecten_opercalaris
-% [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL2_Davi1999);
-% r_B = rho_B * k_M; L_i = l_i * L_m;
-% [t L] = ode45(@get_L2, tL2_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
-% EL_tL2_Davi1999 = L/ del_Mj;
+% tL2 - DMC w/varying temp from AmP entry Aequipecten_opercalaris
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_tL2_Davi1999);
+r_B = rho_B * k_M; L_i = l_i * L_m;
+[t L] = ode45(@get_L2, tL2_Davi1999(:,1), Lw_0_davi1999*del_Mj, [], r_B, L_i, T_ref, pars_T); 
+EL_tL2_Davi1999 = L/ del_Mj;
 
 % % from littorina littorina
-% %f = f_LeviDoal2013; 
-% L_0T = (Wd_0_LeviDoal2013/ (1 + f_LeviDoal2013 * w)/ d_V)^(1/3);
-% % from Assiminea japonica
-% [~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_LeviDoal2013);
-% r_B = rho_B * k_M; L_i = l_i * L_m;
-% [t, L] = ode45(@get_L3, tWd_LeviDoal2013(:,1), L_0T, [], L_i, r_B, T_ref, pars_T);
-% EWd_LeviDoal2013 = L.^3 * (1 + f_LeviDoal2013 * w) * d_V; % mg, AFDW
+%f = f_LeviDoal2013; 
+L_0T = (Wd_0_LeviDoal2013/ (1 + f_LeviDoal2013 * w) / d_V)^(1/3);
+% from Assiminea japonica
+[~, ~, ~, ~, ~, ~, l_i, ~, rho_B] = get_tj(pars_tj, f_LeviDoal2013);
+r_B = rho_B * k_M; 
+L_i = l_i * L_m;
+[t, L] = ode45(@get_L3, tWd_LeviDoal2013(:,1), L_0T, [], L_i, r_B, T_ref, pars_T);
+EWd_LeviDoal2013 = L.^3 * (1 + f_LeviDoal2013 * w) * d_V; % mg, AFDW
 
-% % Respiration data from ShumKoen1982
-% p_ref  = p_Am * L_m^2; % J/d, max assimilation power at max size and T_ref
-% pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp];
-% % at T = 10 C
-% f      = 1;
-% e      = 1;                                                         % -,     scaled reserve density e = f at f = 1
-% TC     = TC_10;                                                     % -,     temperature correction factor
-% L      = (WdJO_10(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
-% l      = L / L_m;                                                   % -,     scaled length
-% p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
-% p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
-% p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
-% p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
-% p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
-% J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
-% J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
-% EJO_10 = J_O / 1000000;                                             % mL/h,  O2-consumption
-% % at T = 20 C
-% TC     = TC_20;                                                     % -,     temperature correction factor
-% L      = (WdJO_20(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
-% l      = L / L_m;                                                   % -,     scaled length
-% p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
-% p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
-% p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
-% p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
-% p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
-% J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
-% J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
-% EJO_20 = J_O / 1000000;                                             % mL/h,  O2-consumption
-% % at T = 30 C
-% TC     = TC_30;                                                     % -,     temperature correction factor
-% L      = (WdJO_30(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
-% l      = L / L_m;                                                   % -,     scaled length
-% p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
-% p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
-% p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
-% p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
-% p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
-% J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
-% J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
-% EJO_30 = J_O / 1000000;                                             % mL/h,  O2-consumption
+% Respiration data from Dame1972
+p_ref  = p_Am * L_m^2; % J/d, max assimilation power at max size and T_ref
+pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp];
+% at T = 10 C
+f      = 1;
+e      = 1;                                                         % -,     scaled reserve density e = f at f = 1
+TC     = TC_10;                                                     % -,     temperature correction factor
+L      = (WdJO_10(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
+l      = L / L_m;                                                   % -,     scaled length
+p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
+p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
+p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
+p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
+p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
+J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
+J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+EJO_10 = J_O / 1000;                                                % µL/h,  O2-consumption
+% at T = 20 C
+TC     = TC_20;                                                     % -,     temperature correction factor
+L      = (WdJO_20(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
+l      = L / L_m;                                                   % -,     scaled length
+p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
+p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
+p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
+p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
+p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
+J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
+J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+EJO_20 = J_O / 1000;                                                % µL/h,  O2-consumption
+% at T = 30 C
+TC     = TC_30;                                                     % -,     temperature correction factor
+L      = (WdJO_30(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
+l      = L / L_m;                                                   % -,     scaled length
+p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
+p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
+p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
+p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
+p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
+J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
+J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+EJO_30 = J_O / 1000;                                                % µL/h,  O2-consumption
 
 % Pack to output
 prdData.tL_KraeFord2007  = EL_KraeFord2007;
@@ -248,31 +251,34 @@ prdData.tL_f2            = ELw_f2;
 prdData.tL_f3            = ELw_f3;
 prdData.tL_f4            = ELw_f4;
 prdData.LF               = EF;
-
-% prdData.tL1_Davi1999    = EL_tL1_Davi1999;
-% prdData.tL2_Davi1999    = EL_tL2_Davi1999;
-% prdData.WdJO_10  = EJO_10;
-% prdData.WdJO_20  = EJO_20;
-% prdData.WdJO_30  = EJO_30;
-% prdData.tWd_LeviDoal2013 = EWd_LeviDoal2013;
+prdData.WdJO_10         = EJO_10;
+prdData.WdJO_20         = EJO_20;
+prdData.WdJO_30         = EJO_30;
+prdData.tL1_Davi1999    = EL_tL1_Davi1999;
+prdData.tL2_Davi1999    = EL_tL2_Davi1999;
+prdData.WdJO_10  = EJO_10;
+prdData.WdJO_20  = EJO_20;
+prdData.WdJO_30  = EJO_30;
+prdData.tWd_LeviDoal2013 = EWd_LeviDoal2013;
 
 end
 
 %% sin function varying temperature 
 
-% function dL = get_L1(t, L, r_B, L_i, T_ref, pars_T)
-%   TC = tempcorr(C2K(12.5+10*sin(2*pi*((t+148)+245)/365)), T_ref, pars_T);
-%   dL = TC * r_B * (L_i -L); 
-% end
-% 
-% function dL = get_L2(t, L, r_B, L_i, T_ref, pars_T)
-%   TC = tempcorr(C2K(10+8.4*sin(2*pi*((t+148)+233)/365)), T_ref, pars_T);
-%   dL = TC * r_B * (L_i -L);
-% end
-% 
-% function dL = get_L3(t, L, L_i, r_B, T_ref, pars_T)
-%   TC = tempcorr(C2K(14.4+12.9*sin(2*pi*((t+160)+252)/365)), T_ref, pars_T);
-%   dL = TC * r_B * (L_i - L);
-% end
+function dL = get_L1(t, L, r_B, L_i, T_ref, pars_T)
+  TC = tempcorr(C2K(12.5+10*sin(2*pi*((t+160)+245)/365)), T_ref, pars_T);
+  dL = TC * r_B * (L_i - L); 
+end
+
+
+function dL = get_L2(t, L, r_B, L_i, T_ref, pars_T)
+  TC = tempcorr(C2K(10+8.4*sin(2*pi*((t+160)+233)/365)), T_ref, pars_T); % t + x -> (x = the date that the study starts)
+  dL = TC * r_B * (L_i -L); % analytical solution for L = L_i - (l_i-l_b)e^-rbt
+end
+
+function dL = get_L3(t, L, L_i, r_B, T_ref, pars_T)
+  TC = tempcorr(C2K(14.4+12.9*sin(2*pi*((t+160)+252)/365)), T_ref, pars_T);
+  dL = TC * r_B * (L_i - L);
+end
 
 
