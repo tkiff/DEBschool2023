@@ -134,23 +134,24 @@ EWd = ((LWd(:,1) * del_Mj).^3 * (1 + w * f_Kiff2022)) * d_V; % g, expected dry w
 % tL_f1
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_1); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
-L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f1(:,1)))); % Structural length at isomorphic growth
-EL_w_f1 = L/del_Mj; % convert to physical length
+L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f1(:,1)))); % Structural? length at isomorphic growth
+% do I need to convert intial length (Lw0_f) to structural length?
+ELw_f1 = L/del_Mj; % convert to physical length
 % tL_f2
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_2); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
 L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f2(:,1)))); % Structural length at isomorphic growth
-EL_w_f2 = L/del_Mj; % convert to physical length
+ELw_f2 = L/del_Mj; % convert to physical length
 % tL_f3
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_3); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
 L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f3(:,1)))); % Structural length at isomorphic growth
-EL_w_f3 = L/del_Mj; % convert to physical length
+ELw_f3 = L/del_Mj; % convert to physical length
 % tL_f4
 [~, ~, ~, ~, ~, ~, ~, ~, rho_B] = get_tj(pars_tj, f_4); % inefficient
 rT_B = TC_tL_f * rho_B * k_M; 
 L = (L_i - (L_i - Lw0_f) * exp(-rT_B * (tL_f4(:,1)))); % Structural length at isomorphic growth
-EL_w_f4 = L/del_Mj; % convert to physical length
+ELw_f4 = L/del_Mj; % convert to physical length
 
 % LEFT OFF
 
@@ -226,10 +227,10 @@ prdData.tL_KraeFord2007  = EL_KraeFord2007;
 prdData.tL_GrizWard2017  = ELw_GrizWard2017;
 prdData.tWd_GrizWard2017 = EWd_GrizWard2017;
 prdData.LWd              = EWd;
-prdData.EL_w_f1          = tL_f1;
-prdData.EL_w_f2          = tL_f2;
-prdData.EL_w_f3          = tL_f3;
-prdData.EL_w_f4          = tL_f4;
+prdData.ELw_f1           = tL_f1;
+prdData.ELw_f2           = tL_f2;
+prdData.ELw_f3           = tL_f3;
+prdData.ELw_f4           = tL_f4;
 
 prdData.tL1_Davi1999    = EL_tL1_Davi1999;
 prdData.tL2_Davi1999    = EL_tL2_Davi1999;
