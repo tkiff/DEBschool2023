@@ -219,10 +219,12 @@ weights.tL_f2 = 0 * weights.tL_f2;
 weights.tL_f3 = 0 * weights.tL_f3;
 weights.tL_f4 = 0 * weights.tL_f4;
 % 
-% weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
-% weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
-% weights.tWd_GrizWard2017 = 0 * weights.tWd_GrizWard2017;
+weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
+weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
+weights.tWd_GrizWard2017 = 0 * weights.tWd_GrizWard2017;
 % weights.LWd = 0 * weights.LWd;
+
+weights.tWd_LeviDoal2013 = 5 * weights.tWd_LeviDoal2013;
 
 
 
