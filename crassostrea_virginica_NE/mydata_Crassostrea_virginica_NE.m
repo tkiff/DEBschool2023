@@ -59,7 +59,10 @@ data.Lj = 0.035;  units.Lj = 'cm'; label.Lj = 'diameter of a settling larvae'; b
 % Retained from original estimation
 data.Lp = 3;      units.Lp = 'cm'; label.Lp = 'shell height';                  bibkey.Lp = {'Gals1964','HayeMenz1981','ObeiHeff1996','Carr2009'};
 % Retained from original estimation
+% adjusted to fit allometric relationship for cultured oysters
+% assumes tissue growth is the same
 data.Li = 20.6;   units.Li = 'cm'; label.Li = 'ultimate shell height';         bibkey.Li = 'Gals1964';
+% function from cultured oysters  = 16.9
 % Data from wild oysters, Surface grown oysters are typically shorter  
 
 % retained from orginal estimation
@@ -79,14 +82,14 @@ data.Wdi = 35.8;   units.Wdi = 'g'; label.Wdi = 'ultimate dry weight';         b
 % data.Wwi = 35.8;   units.Wdi = 'g'; label.Wdi = 'ultimate wet weight';         bibkey.Wdi = 'Gals1964';
 % Not specified that this is dry weight in source
 
-% Replace ultimate reproductive rate with rate at a large length  
-data.R97  = 15700000; units.R97  = '#/d'; label.R97  = 'reprod rate at 97 mm shell length';   bibkey.R97  = 'GlanMich2016';   
-  temp.R97 = C2K(16); units.temp.R97 = 'K'; label.temp.R97 = 'temperature';
-  comment.R97 = 'Choptank river chesapeak';
+% Replace ultimate reproductive rate with rate at a large length 
 % code in AmP - Mnemiopsis leidyi
+% data.R97  = 15700000; units.R97  = '#/d'; label.R97  = 'reprod rate at 97 mm shell length';   bibkey.R97  = 'GlanMich2016';   
+%   temp.R97 = C2K(16); units.temp.R97 = 'K'; label.temp.R97 = 'temperature';
+%   comment.R97 = 'Choptank river chesapeak';
 % Need to add predict and pars init
-% data.Ri   = 1.3e6;   units.Ri      = '#/d'; label.Ri      = 'maximum reprod rate'; bibkey.Ri  = {'HoffPowe1992','ChoiLewi1993'};
-%   temp.Ri = C2K(20); units.temp.Ri = 'K';   label.temp.Ri = 'temperature';
+data.Ri   = 1.3e6;   units.Ri      = '#/d'; label.Ri      = 'maximum reprod rate'; bibkey.Ri  = {'HoffPowe1992','ChoiLewi1993'};
+  temp.Ri = C2K(20); units.temp.Ri = 'K';   label.temp.Ri = 'temperature';
 
 %% Set Uni-variate data
 
@@ -214,17 +217,26 @@ bibkey.WdJO_30 = 'Dame1972';
 %% set weights for all real data
 weights = setweights(data, []);
 
+weights.am = 0.7 * weights.am; % cannot find evidence for life longer than 7-8 years
+
+weights.tL1_Davi1999 = 2 * weights.tL1_Davi1999;
+weights.tL2_Davi1999 = 2 * weights.tL2_Davi1999;
+
+%weights.R97 = 1 * weights.R97;
+
+%weights.LF = 1 * weights.LF;
+
 weights.tL_f1 = 0 * weights.tL_f1;
 weights.tL_f2 = 0 * weights.tL_f2;
 weights.tL_f3 = 0 * weights.tL_f3;
 weights.tL_f4 = 0 * weights.tL_f4;
 % 
-weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
-weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
-weights.tWd_GrizWard2017 = 0 * weights.tWd_GrizWard2017;
+% weights.tL_KraeFord2007  = 0 * weights.tL_KraeFord2007;
+% weights.tL_GrizWard2017  = 0 * weights.tL_GrizWard2017;
+% weights.tWd_GrizWard2017 = 0 * weights.tWd_GrizWard2017;
 % weights.LWd = 0 * weights.LWd;
 
-weights.tWd_LeviDoal2013 = 5 * weights.tWd_LeviDoal2013;
+%weights.tWd_LeviDoal2013 = 5 * weights.tWd_LeviDoal2013;
 
 
 

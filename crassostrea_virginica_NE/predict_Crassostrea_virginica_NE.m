@@ -13,7 +13,8 @@ filterChecks = ... % f contrained to not be larger than 1 or negeative
                  f_LeviDoal2013 > 1 || f_LeviDoal2013 < 0 || ... ;
                  f_tL1_Davi1999 > 1 || f_tL1_Davi1999 < 0 || ... ;
                  f_tL2_Davi1999 > 1 || f_tL2_Davi1999 < 0 || ... ;
-                 f_KraeFord2007 > 1 || f_KraeFord2007 < 0; % || ... ;
+                  f_KraeFord2007 > 1 || f_KraeFord2007 < 0 || ... ;
+                 f_KraeFord2007 > f_GrizWard2017; % || ...;
                  
              
 
@@ -33,8 +34,8 @@ TC_ab           = tempcorr(temp.ab, T_ref, T_A);
 TC_aj           = tempcorr(temp.aj, T_ref, T_A);
 TC_ap           = tempcorr(temp.ap, T_ref, T_A);
 TC_am           = tempcorr(temp.am, T_ref, T_A); 
-TC_R97          = tempcorr(temp.R97, T_ref, T_A);
-% TC_Ri          = tempcorr(temp.Ri, T_ref, T_A);
+%TC_R97          = tempcorr(temp.R97, T_ref, T_A);
+TC_Ri          = tempcorr(temp.Ri, T_ref, T_A);
 TC_KraeFord2007 = tempcorr(temp.tL_KraeFord2007, T_ref, T_A);
 TC_GrizWard2017 = tempcorr(temp.tL_GrizWard2017, T_ref, T_A);
 % TC_tL1_Davi1999 = tempcorr(temp.tL1_Davi1999, T_ref, T_A); 
@@ -72,16 +73,16 @@ aT_p = t_p / k_M / TC_ap;         % d,  age at puberty at f and T
 % Ultimate
 L_i  = L_m * l_i;                 % cm, ultimate structural length at f
 Lw_i = L_i / del_Mj;              % cm, ultimate physical length at f
-Wd_i = L_i^3 * d_V * (1 + f * w); % g,  ultimate dry weight
+Wd_i = L_i^3 * (1 + f * w) * d_V; %  % g,  ultimate dry weight
 
 
 % reproduction
-pars_R = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb;U_Hj;  U_Hp];  % compose parameter vector at T
-R97 = TC_R97 * reprod_rate_j(9.7 * del_Mj, f, pars_R);       % #/d, ultimate reproduction rate at T
+% pars_R = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb;U_Hj;  U_Hp];  % compose parameter vector at T
+% R97 = TC_R97 * reprod_rate_j(9.7 * del_Mj, f, pars_R);       % #/d, ultimate reproduction rate at T
 
 % % original ultimate reproduction
-% pars_R = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp];
-% RT_i   = TC_Ri * reprod_rate_j(L_i, f, pars_R); % #/d, ultimate reproduction rate at T
+pars_R = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp];
+RT_i   = TC_Ri * reprod_rate_j(L_i, f, pars_R); % #/d, ultimate reproduction rate at T
 
 % Life span
 pars_tm = [g; l_T; h_a / k_M^2; s_G];
@@ -101,8 +102,8 @@ prdData.Wdb = Wd_b;
 prdData.Wdj = Wd_j;
 prdData.Wdp = Wd_p;
 prdData.Wdi = Wd_i;
-prdData.R97 = R97;
-%prdData.Ri  = RT_i;
+%prdData.R97 = R97;
+prdData.Ri  = RT_i;
 
 %% Uni-variate data
 
