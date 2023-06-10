@@ -13,8 +13,8 @@ filterChecks = ... % f contrained to not be larger than 1 or negeative
                  f_LeviDoal2013 > 1 || f_LeviDoal2013 < 0 || ... ;
                  f_tL1_Davi1999 > 1 || f_tL1_Davi1999 < 0 || ... ;
                  f_tL2_Davi1999 > 1 || f_tL2_Davi1999 < 0 || ... ;
-                  f_KraeFord2007 > 1 || f_KraeFord2007 < 0 || ... ;
-                 f_KraeFord2007 > f_GrizWard2017; % || ...;
+                 f_KraeFord2007 > 1 || f_KraeFord2007 < 0 || ... ;
+                 f_KraeFord2007 > f_GrizWard2017 || f_GrizWard2017 < f_KraeFord2007; % || ...;
                  
              
 
