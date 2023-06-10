@@ -218,15 +218,15 @@ bibkey.WdJO_30 = 'Dame1972';
 weights = setweights(data, []);
 
 %weights.am = 0.7 * weights.am; % cannot find evidence for life longer than 7-8 years
-weights.Wdi = 2 * weights.Wdi; % cannot find evidence for life longer than 7-8 years
-weights.ab = 3 * weights.ab;
+% weights.Wdi = 2 * weights.Wdi; % cannot find evidence for life longer than 7-8 years
+% weights.ab = 3 * weights.ab;
 
-weights.tL1_Davi1999 = 2 * weights.tL1_Davi1999;
-weights.tL2_Davi1999 = 2 * weights.tL2_Davi1999;
+% weights.tL1_Davi1999 = 2 * weights.tL1_Davi1999;
+% weights.tL2_Davi1999 = 2 * weights.tL2_Davi1999;
 
 %weights.R97 = 1 * weights.R97;
 
-weights.LF = 0 * weights.LF;
+% weights.LF = 0 * weights.LF;
 
 weights.tL_f1 = 0 * weights.tL_f1;
 weights.tL_f2 = 0 * weights.tL_f2;
@@ -249,8 +249,8 @@ weights.tL_f4 = 0 * weights.tL_f4;
 % weights.psd.k = 2 * weights.psd.k_J; weights.psd.k_J = 0;
 % weights.psd.p_M = 5 * weights.psd.p_M;
 
-data.psd.p_M = 31;
-weights.psd.p_M = 3 * weights.psd.p_M;
+% data.psd.p_M = 31;
+% weights.psd.p_M = 3 * weights.psd.p_M;
 
 %% pack auxData and txtData for output
 auxData.temp   = temp;

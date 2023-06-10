@@ -11,7 +11,7 @@
 % Parameter for the std model
 % p_AM and p_M multiplied by acceleration factor
 
- % Temperature correction parameters
+ % AmP data
 T_ref = 273 + 20; %  1 K, reference temperature
 T_L   = 273 + 10;  %  2 K, lower boundary tolerance range
 T_H   = 273 + 30; %  3 K, upper boundary tolerance range
@@ -29,6 +29,27 @@ p_M     = 4.17;   % 13 J/d/cm^3, volume-specific somatic maintenance rate
 k_J     = 0.00054; % 14 1/d,      maturity maintenance rate coefficient
 E_G     = 2315;   % 15 J/cm^3,   volume-specific cost for structure
 E_Hp    = 974 ;    % 16 J,        maturity at puberty
+
+% Lavaud et al. 2017
+% T_ref = 273 + 20; %  1 K, reference temperature
+% T_L   = 273 + 10;  %  2 K, lower boundary tolerance range
+% T_H   = 273 + 30; %  3 K, upper boundary tolerance range
+% T_A   = 6700;     %  4 K, Arrehnius temperature
+% T_AL  = 21820;    %  5 K, Arrehnius temperature at lower boundary of tolerance range
+% T_AH  = 45380;    % t 6 K, Arrehnius temperature at upper boundary of tolerance range
+%  % Primary parameters (Crassostrea virginica - kiffney 2023)
+% p_Am    = 249.5  ;%  7 J/d/cm^2, maximum surface-specific assimilation rate
+% v       = 0.0345 ; %  8 cm/d,     energy conductance
+% kap     = 0.82;   %  9 -,        alloaction fraction to soma
+% kap_X   = 0.75;   % 10 -,        assimilation efficiency
+% kap_X_P = 0.1;    % 11 -,        defecation efficiency
+% kap_R   = 0.95;   % 12 -,        reproduction efficiency
+% p_M     = 38;   % 13 J/d/cm^3, volume-specific somatic maintenance rate
+% k_J     = 0.00054; % 14 1/d,      maturity maintenance rate coefficient
+% E_G     = 5230;   % 15 J/cm^3,   volume-specific cost for structure
+% E_Hp    = 369.9 ;    % 16 J,        maturity at puberty
+
+
 
 del_M   = 0.29;  % 17 -,        shape coefficient
  % Additional parameters
@@ -75,7 +96,7 @@ condini = [Vi Ei E_Hi E_Ri]; % pack initial conditions
 
 %% DMC data
 
-dmcEnv = readtable('DMC_env.csv');
+%dmcEnv = readtable('DMC_env.csv');
 
 %% Simulation parameters
 
@@ -140,8 +161,9 @@ subplot(2,3,5)
 plot(Results(:,1), Results(:,15), Results(:,1), Results(:,16))
 legend('p_S','p_G','location','north'); xlabel('d'); ylabel('J/d')
 subplot(2,3,6)
-plot(Results(:,1), Results(:,23))
-xlabel('d'); ylabel('J_O (mg_{O_2}/h)')
+plot(Results(:,1), Results(:,22), Results(:,1), Results(:,23))
+xlabel('d'); ylabel('J_O (mL_{O_2}/h)')
+legend('romain', 'amp')
 
 %% export results
     

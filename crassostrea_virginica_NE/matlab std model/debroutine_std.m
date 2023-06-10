@@ -111,6 +111,10 @@ for j=1:nb_step % beginning of the integration loop
   J_Omg  = J_M(3,:)' * 32e3 / 24 / DW;                    % mgO2/h/g,  O2 consumption (32 g/mol)
   J_N    = J_M(4,:)' * 18e6 / 24 / DW;                    % µgNH4/h/g, NH4 production (18 g/mol)
 
+  J_M2    = -(n_M \ n_O) * eta_O * pADGs';                             % mol/d, mineral fluxes
+  J_O2    = -22.4e3 / 24 * J_M2(3,:)' / DW;                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+
+  
   % Lysis and shrinking
   shrink_M = max(0,p_S - kap * p_C);           % J/d, deficit in somatic maintenance
   shrink_J = max(0,p_J - (1 - kap) * p_C);     % J/d, deficit in maturity maintenance
@@ -154,7 +158,7 @@ for j=1:nb_step % beginning of the integration loop
   pDt(j)   = p_D;    % 20
   skt(j)   = shrink; % 21
   JOmLt(j) = J_OmL;  % 22
-  JOmgt(j) = J_Omg;  % 23
+  JOmgt(j) = J_O2;  % 23
   JNt(j)   = J_N;    % 24
   
   % Integration
