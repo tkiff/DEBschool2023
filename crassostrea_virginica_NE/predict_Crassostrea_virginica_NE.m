@@ -50,6 +50,7 @@ TC_30           = tempcorr(temp.WdJO_30, T_ref, T_A);
 % Life cycle
 pars_tj = [g; k; l_T; v_Hb; v_Hj; v_Hp];
 [t_j, t_p, t_b, l_j, l_p, l_b, l_i, ~, ~, info] = get_tj(pars_tj, f); % -, scaled times & lengths at f
+if ~info; prdData = []; return;  end
 
 % Birth
 L_b  = L_m * l_b;                 % cm, structural length at birth at f
@@ -202,45 +203,74 @@ EWd_LeviDoal2013 = L.^3 * (1 + f_LeviDoal2013 * w) * d_V; % mg, AFDW
 
 % Respiration data from Dame1972
 p_ref  = p_Am * L_m^2; % J/d, max assimilation power at max size and T_ref
-pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp];
-% at T = 10 C
-f      = 1;
-e      = 1;                                                         % -,     scaled reserve density e = f at f = 1
-TC     = TC_10;                                                     % -,     temperature correction factor
-L      = (WdJO_10(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
-l      = L / L_m;                                                   % -,     scaled length
-p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
-p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
-p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
-p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
-p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
-J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
-J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
-EJO_10 = J_O / 1000;                                                % µL/h,  O2-consumption
-% at T = 20 C
-TC     = TC_20;                                                     % -,     temperature correction factor
-L      = (WdJO_20(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
-l      = L / L_m;                                                   % -,     scaled length
-p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
-p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
-p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
-p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
-p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
-J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
-J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
-EJO_20 = J_O / 1000;                                                % µL/h,  O2-consumption
-% at T = 30 C
-TC     = TC_30;                                                     % -,     temperature correction factor
-L      = (WdJO_30(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
-l      = L / L_m;                                                   % -,     scaled length
-p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
-p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
-p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
-p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
-p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
-J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
-J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
-EJO_30 = J_O / 1000;                                                % µL/h,  O2-consumption
+O2M = (- n_M\n_O)'; % -, matrix that converts organic to mineral fluxes  O2M is prepared for post-multiplication eq. 4.35
+pars_power = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp;]; 
+[l_j, l_p, l_b, info] = get_lj([g, k, l_T, v_Hb, v_Hj, v_Hp], f);
+if ~info; prdData = []; return;  end
+L      = (WdJO_10(:,1) / (1 + f * w) / d_V).^(1/3); % cm, structural length
+[Lsort, ai,ci] = unique(L); % unique, monotonously increasing values
+pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_power, l_b, l_j, l_p);
+pADG = pACSJGRD(:, [1 7 5]); % pADG(:,1) = 0; % exclude assim contribution
+J_M = pADG * eta_O' * O2M; % mol/d, mineral fluxes
+J_O    = -24.4e9 / 24 * J_M(:,3); % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+EJO_10 = TC_10 * J_O(ci) / 1000; % µL/h,  O2-consumption at T
+ 
+L      = (WdJO_20(:,1) / (1 + f * w) / d_V).^(1/3); % cm, structural length
+[Lsort, ai,ci] = unique(L); % unique, monotonously increasing values
+pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_power, l_b, l_j, l_p);
+pADG = pACSJGRD(:, [1 7 5]); % pADG(:,1) = 0; % exclude assim contribution
+J_M = pADG * eta_O' * O2M; % mol/d, mineral fluxes
+J_O    = -24.4e9 / 24 * J_M(:,3); % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+EJO_20 = TC_20 * J_O(ci) / 1000; % µL/h,  O2-consumption at T
+
+L      = (WdJO_30(:,1) / (1 + f * w) / d_V).^(1/3); % cm, structural length
+[Lsort, ai,ci] = unique(L); % unique, monotonously increasing values
+pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_power, l_b, l_j, l_p);
+pADG = pACSJGRD(:, [1 7 5]); % pADG(:,1) = 0; % exclude assim contribution
+J_M = pADG * eta_O' * O2M; % mol/d, mineral fluxes
+J_O    = -24.4e9 / 24 * J_M(:,3); % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+EJO_30 = TC_30 * J_O(ci) / 1000; % µL/h,  O2-consumption at T
+
+% p_ref  = p_Am * L_m^2; % J/d, max assimilation power at max size and T_ref
+% pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp];
+% % at T = 10 C
+% f      = 1;
+% e      = 1;                                                         % -,     scaled reserve density e = f at f = 1
+% TC     = TC_10;                                                     % -,     temperature correction factor
+% L      = (WdJO_10(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
+% l      = L / L_m;                                                   % -,     scaled length
+% p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
+% p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
+% p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
+% p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
+% p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
+% J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
+% J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+% EJO_10 = J_O / 1000;                                                % µL/h,  O2-consumption
+% % at T = 20 C
+% TC     = TC_20;                                                     % -,     temperature correction factor
+% L      = (WdJO_20(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
+% l      = L / L_m;                                                   % -,     scaled length
+% p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
+% p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
+% p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
+% p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
+% p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
+% J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
+% J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+% EJO_20 = J_O / 1000;                                                % µL/h,  O2-consumption
+% % at T = 30 C
+% TC     = TC_30;                                                     % -,     temperature correction factor
+% L      = (WdJO_30(:,1) / (1 + f * w) / d_V).^(1/3);                 % cm,    structural length
+% l      = L / L_m;                                                   % -,     scaled length
+% p_ref  = TC * (p_Am * s_M) * L_m^2;                                 % J/d,   reference power after metamorphosis
+% p_A    = f * l.^2;                                                  % -,     scaled assimilation power (page 78 DEB book)
+% p_D    = kap * l.^3  + (1 - kap) * e .* l.^2 .* (g + l) ./ (g + e); % -,     scaled dissapating power (page 77 DEB book)
+% p_G    = kap * l.^2 .* (e - l - l_T) / (1 + e / g);                 % -,     scaled growth power (page 78 DEB book)
+% p_ADG  = p_ref * [p_A, p_D, p_G];                                   % J/d,   basic powers
+% J_M    = -(n_M \ n_O) * eta_O * p_ADG';                             % mol/d, mineral fluxes
+% J_O    = -24.4e9 / 24 * J_M(3,:)';                                  % nL/h,  O2-consumption (from predict_Crassostrea_gigas)
+% EJO_30 = J_O / 1000;                                                % µL/h,  O2-consumption
 
 % Pack to output
 prdData.tL_KraeFord2007  = EL_KraeFord2007;
